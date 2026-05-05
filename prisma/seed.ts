@@ -1,4 +1,4 @@
-import {prisma} from '../lib/db'
+import prisma from '../lib/db'
 import { Role } from '../prisma/generated/prisma'
 
 async function main() {
