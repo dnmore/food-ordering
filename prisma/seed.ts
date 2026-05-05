@@ -1,5 +1,5 @@
 import prisma from '../lib/db'
-import { Role } from '../prisma/generated/prisma'
+import { Role } from "@prisma/client"
 
 async function main() {
   // CREATE
