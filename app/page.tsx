@@ -2,17 +2,22 @@ import { Button } from "@/components/ui/button"
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
+    <div className="container mx-auto flex items-center">
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-4 py-10 text-center">
+        <h1 className="text-3xl font-extrabold md:text-5xl">
+          Crave. Savor. Repeat.
+        </h1>
+        <p className="text-lg text-muted-foreground">
+          Discover Our Flavor Packed Menu
+        </p>
+
         <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
+          From juicy burgers to Tex-Mex delights, nachos, nuggets, and
+          irresistible desserts, satisfy every craving today!
         </div>
+        <Button size="lg" className="mt-2 px-6">
+          Explore
+        </Button>
       </div>
     </div>
   )
