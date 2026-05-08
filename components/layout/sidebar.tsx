@@ -20,8 +20,8 @@ const links = [
     icon: LayoutDashboard,
   },
   {
-    name: "Products",
-    href: "/dashboard/products",
+    name: "Menu",
+    href: "/dashboard/menu",
     icon: ChefHat,
   },
   {
