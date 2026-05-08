@@ -81,3 +81,27 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("verification_tokens")
 }
+
+model MenuCategory {
+  id        String        @id @default(cuid())
+  title     String     @unique
+  items     MenuItem[]
+
+  createdAt DateTime   @default(now())
+  
+}
+
+model MenuItem {
+  id         String         @id @default(cuid())
+  name       String
+  imageUrl   String
+  price      Decimal      @db.Decimal(6, 2)
+
+  categoryId String
+  category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime     @default(now())
+  
+
+  @@index([categoryId])
+}
