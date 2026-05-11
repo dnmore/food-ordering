@@ -11,7 +11,9 @@ const MenuCategorySchema = z.object({
 const MenuItemSchema = z.object({
   name: z.string().min(1, "Name is required"),
   imageUrl: z.string(),
-  price: z.number().min(0, "Price must be a positive number"),
+  price: z.coerce
+    .number()
+    .gt(0, { message: "Please enter an amount greater than 0." }),
   categoryId: z.string().min(1, "Category is required"),
 })
 
