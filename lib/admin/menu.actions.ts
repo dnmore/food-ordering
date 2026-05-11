@@ -119,8 +119,8 @@ export async function deleteMenuCategory(id: string) {
   })
   revalidateTag("menuCategories", "max")
   revalidateTag("dashboard", "max")
-  revalidatePath("/dashboard/menu")
-  redirect("/dashboard/menu")
+  revalidatePath("/dashboard/categories")
+  redirect("/dashboard/categories")
 }
 
 export async function deleteMenuItem(id: string) {
@@ -131,8 +131,8 @@ export async function deleteMenuItem(id: string) {
   })
   revalidateTag("menuItems", "max")
   revalidateTag("dashboard", "max")
-  revalidatePath("/dashboard/menu")
-  redirect("/dashboard/menu")
+  revalidatePath("/dashboard/items")
+  redirect("/dashboard/items")
 }
 
 export async function updateMenuCategory(
