@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { clsx } from "clsx"
 
-import { LayoutDashboard, ChefHat, ShoppingBag } from "lucide-react"
+import { LayoutDashboard, Folders ,UtensilsCrossed, ShoppingBag } from "lucide-react"
 
 import {
   Tooltip,
@@ -20,9 +20,14 @@ const links = [
     icon: LayoutDashboard,
   },
   {
-    name: "Menu",
-    href: "/dashboard/menu",
-    icon: ChefHat,
+    name: "Categories",
+    href: "/dashboard/categories",
+    icon: Folders,
+  },
+  {
+    name: "Items",
+    href: "/dashboard/items",
+    icon: UtensilsCrossed,
   },
   {
     name: "Orders",
@@ -57,7 +62,7 @@ export function Sidebar() {
                   }
                 )}
               >
-                <Icon aria-hidden="true" />
+                <Icon aria-hidden="true" className="h-5 w-5"/>
 
                 <span className="hidden md:inline">{name}</span>
               </Link>

@@ -14,3 +14,9 @@ export type MenuItem = {
 }
 
 export type CategorySelectOption = Omit<MenuCategory, "createdAt">
+
+export type MenuCategoryTableRow = Omit <MenuCategory, "createdAt">
+
+export type MenuItemTableRow = Omit<MenuItem, "categoryId" | "createdAt"> & {
+  categoryTitle: string
+}
