@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function Page() {
   return (
@@ -15,8 +16,8 @@ export default function Page() {
           From juicy burgers to Tex-Mex delights, nachos, nuggets, and
           irresistible desserts, satisfy every craving today!
         </div>
-        <Button size="lg" className="mt-2 px-6">
-          Explore
+        <Button variant="link" size="lg" className="mt-2 px-6">
+          <Link href="/menu">Explore</Link>
         </Button>
       </div>
     </div>
