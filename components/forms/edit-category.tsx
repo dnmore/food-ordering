@@ -1,5 +1,6 @@
 "use client"
-import { createMenuCategory, MenuCategoryState } from "@/lib/admin/menu.actions"
+import { updateMenuCategory, MenuCategoryState } from "@/lib/admin/menu.actions"
+import { MenuCategoryTableRow } from "@/lib/definitions"
 import { useActionState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -9,13 +10,17 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 
 
-export default function CreateMenuCategoryForm() {
+export default function EditMenuCategoryForm({ category }: { category: MenuCategoryTableRow }) {
   const initialState: MenuCategoryState = {
     message: null,
     errors: {},
   }
 
-  const [state, formAction] = useActionState(createMenuCategory, initialState)
+  const [state, formAction] = useActionState(
+    (prevState: MenuCategoryState, formData: FormData) =>
+      updateMenuCategory(category.id, formData, prevState),
+    initialState,
+  );
 
   return (
     <Card>
@@ -27,7 +32,7 @@ export default function CreateMenuCategoryForm() {
               id="title"
               name="title"
               type="text"
-              placeholder="Appetizers"
+              defaultValue={category.title}
             />
             <div id="title-error" aria-live="polite" aria-atomic="true">
               {state.errors?.title &&

@@ -65,8 +65,8 @@ export async function createMenuCategory(
 
   revalidateTag("menuCategories", "max")
   revalidateTag("dashboard", "max")
-  revalidatePath("/dashboard/menu")
-  redirect("/dashboard/menu")
+  revalidatePath("/dashboard/categories")
+  redirect("/dashboard/categories")
 }
 
 export async function createMenuItem(
@@ -108,8 +108,8 @@ export async function createMenuItem(
 
   revalidateTag("menuItems", "max")
   revalidateTag("dashboard", "max")
-  revalidatePath("/dashboard/menu")
-  redirect("/dashboard/menu")
+  revalidatePath("/dashboard/items")
+  redirect("/dashboard/items")
 }
 export async function deleteMenuCategory(id: string) {
   await prisma.menuCategory.delete({
@@ -137,8 +137,8 @@ export async function deleteMenuItem(id: string) {
 
 export async function updateMenuCategory(
   id: string,
-  prevState: MenuCategoryState,
-  formData: FormData
+    formData: FormData,
+    prevState: MenuCategoryState,
 ) {
   const rawData = {
     title: formData.get("title"),
@@ -162,8 +162,8 @@ export async function updateMenuCategory(
   })
   revalidateTag("menuCategories", "max")
   revalidateTag("dashboard", "max")
-  revalidatePath("/dashboard/menu")
-  redirect("/dashboard/menu")
+  revalidatePath("/dashboard/categories")
+  redirect("/dashboard/categories")
 }
 
 export async function updateMenuItem(
@@ -206,6 +206,6 @@ export async function updateMenuItem(
   })
   revalidateTag("menuItems", "max")
   revalidateTag("dashboard", "max")
-  revalidatePath("/dashboard/menu")
-  redirect("/dashboard/menu")
+  revalidatePath("/dashboard/items")
+  redirect("/dashboard/items")
 }

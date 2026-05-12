@@ -38,7 +38,9 @@ export const menuItemsColumns: ColumnDef<MenuItemTableRow>[] = [
 
       return (
         <div className="flex gap-2">
-          <span>Edit </span>
+           <Link href={`/dashboard/items/${item.id}/edit`}>
+            Edit
+          </Link>
 
           <DeleteItemButton id={item.id} />
         </div>

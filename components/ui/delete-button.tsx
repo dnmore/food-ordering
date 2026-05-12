@@ -30,9 +30,12 @@ export function DeleteCategoryButton({ id }: { id: string }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <div>
+            <AlertDialogCancel className="w-full">Cancel</AlertDialogCancel>
+          </div>
+          
           <form action={deleteCategoryWithId}>
-            <AlertDialogAction type="submit">Continue</AlertDialogAction>
+            <AlertDialogAction type="submit" className="w-full">Continue</AlertDialogAction>
           </form>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -59,9 +62,12 @@ export function DeleteItemButton({ id }: { id: string }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <div>
+            <AlertDialogCancel className="w-full">Cancel</AlertDialogCancel>
+          </div>
+          
           <form action={deleteItemWithId}>
-            <AlertDialogAction type="submit">Continue</AlertDialogAction>
+            <AlertDialogAction type="submit" className="w-full">Continue</AlertDialogAction>
           </form>
         </AlertDialogFooter>
       </AlertDialogContent>

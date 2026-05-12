@@ -5,7 +5,6 @@ import { MenuCategoryTableRow } from "@/lib/definitions"
 import { DeleteCategoryButton } from "@/components/ui/delete-button"
 import { ColumnDef } from "@tanstack/react-table"
 
-
 export const categoriesColumns: ColumnDef<MenuCategoryTableRow>[] = [
   {
     accessorKey: "title",
@@ -18,8 +17,9 @@ export const categoriesColumns: ColumnDef<MenuCategoryTableRow>[] = [
 
       return (
         <div className="flex gap-2">
-          <span>Edit </span>
-
+          <Link href={`/dashboard/categories/${category.id}/edit`}>
+            Edit
+          </Link>
           <DeleteCategoryButton id={category.id} />
         </div>
       )
