@@ -60,7 +60,7 @@ export default function Cart() {
           </div>
         </div>
 
-        <div className="max-h-105 overflow-y-auto" aria-label="Cart items">
+        <div aria-label="Cart items">
           {cartItems.length === 0 ? (
             <div className="flex flex-col items-center justify-center gap-2 p-8 text-center">
               <ShoppingCart className="h-5 w-5" />

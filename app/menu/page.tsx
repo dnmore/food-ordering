@@ -18,7 +18,7 @@ export default async function Page() {
               categoryTitle={item.categoryTitle}
             />
           ))}
-        </ul>{" "}
+        </ul>
       </div>
     </div>
   )
