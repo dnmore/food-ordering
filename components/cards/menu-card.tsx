@@ -1,4 +1,6 @@
-import Image from "next/image"
+"use client";
+import { useContext } from "react"
+import CartContext from "@/app/context/cart-context"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -11,7 +13,10 @@ import {
 } from "@/components/ui/card"
 import { MenuItemTableRow } from "@/lib/definitions"
 
-export function MenuCard({ name, price, imageUrl, categoryTitle }: MenuItemTableRow) {
+
+
+export function MenuCard({ id, name, price, imageUrl, categoryTitle }: MenuItemTableRow) {
+  const { addToCart } = useContext(CartContext)
   return (
     <Card className="relative mx-auto w-full max-w-sm pt-0">
       <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
@@ -31,7 +36,9 @@ export function MenuCard({ name, price, imageUrl, categoryTitle }: MenuItemTable
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Button className="w-full">Add to Cart</Button>
+        <Button className="w-full" onClick={() => addToCart({ id, name, price, imageUrl, quantity: 1 })}>
+          Add to Cart
+        </Button>
       </CardFooter>
     </Card>
   )

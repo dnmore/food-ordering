@@ -12,7 +12,7 @@ export function LoginButton() {
       type="submit"
       size="lg"
       disabled={pending}
-      className="flex items-center gap-2 px-6 py-4"
+      className="flex items-center gap-2"
     >
       {pending ? (
         <>

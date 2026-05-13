@@ -1,6 +1,5 @@
 import { signIn, signOut } from "@/lib/auth"
 import { LoginButton } from "./login-button"
-import { LogOut } from "lucide-react"
 import { Button } from "../ui/button"
 
 export function SignIn({ provider }: { provider?: string }) {

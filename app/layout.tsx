@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Figtree } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { CartProvider } from "./context/cart-context";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/navbar"
 
@@ -25,10 +26,12 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
+          <CartProvider>
           <main className="min-h-screen flex flex-col">
             <Navbar />
             {children}
           </main>
+          </CartProvider>
           </ThemeProvider>
       </body>
     </html>

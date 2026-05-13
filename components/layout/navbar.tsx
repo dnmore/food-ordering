@@ -1,5 +1,6 @@
 import { verifySession } from "@/lib/dal"
 import { ModeToggle } from "@/components/ui/mode-toggle"
+import  Cart from "@/components/cart/cart"
 import { MapPin, UserIcon } from "lucide-react"
 import { SignIn, SignOut } from "../auth/auth-components"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -8,15 +9,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export default async function Navbar() {
   const isAuthenticated = await verifySession();
   return (
-    <header className="flex h-14 items-center justify-between border-b bg-background px-6">
+    <header className="w-full border-b border-b-muted bg-background p-4">
       <nav
         aria-label="Main navigation"
-        className="flex w-full items-center justify-between"
+        className="flex items-center justify-between"
       >
-        <div className="flex items-center">
-          <MapPin className="h-6 w-6 text-emerald-700" />
-          <p className="text-xl font-medium">CraveWaves</p>
-        </div>
+        
+          <p className="font-medium font-mono">CraveWaves</p>
+   
 
         <div className="flex items-center gap-2">
           {isAuthenticated?.user ? <div className="flex items-center gap-2">
@@ -34,7 +34,7 @@ export default async function Navbar() {
 <SignIn />
          
           }
-          
+          <Cart />
           <ModeToggle />
         </div>
       </nav>
