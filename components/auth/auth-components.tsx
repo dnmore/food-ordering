@@ -1,6 +1,6 @@
 import { signIn, signOut } from "@/lib/auth"
-import { LoginButton } from "./login-button"
-import { Button } from "../ui/button"
+import { LoginButton } from "../buttons/login-button"
+import { LogOutIcon } from "lucide-react"
 
 export function SignIn({ provider }: { provider?: string }) {
   return (
@@ -20,10 +20,12 @@ export function SignOut() {
     <form
       action={async () => {
         "use server"
-        await signOut({ redirectTo: "/" })
+        await signOut()
       }}
     >
-      <Button variant="ghost">Sign Out</Button>
+      <button className="flex items-center gap-1">
+        <LogOutIcon /> Log out
+      </button>
     </form>
   )
 }

@@ -10,3 +10,8 @@ export const verifySession = cache(async () =>
 
       return session;
 })
+
+export const getUserRole = cache(async () => {
+    const session = await verifySession()
+    return session?.user?.role
+})

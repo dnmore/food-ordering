@@ -1,6 +1,6 @@
 "use client"
 import { useContext } from "react"
-import CartContext from "../context/cart-context"
+import CartContext from "../../context/cart-context"
 import {
   Table,
   TableBody,
