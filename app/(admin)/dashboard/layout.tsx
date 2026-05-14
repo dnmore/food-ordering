@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { getUserRole } from "@/lib/dal";
 import { Sidebar } from "@/components/layout/sidebar";
 
 
@@ -8,7 +10,10 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   
-   
+   const userRole = await getUserRole()
+   if(userRole !== "ADMIN"){
+    redirect("/")
+   }
 
   return (
     <div className="flex flex-1 overflow-hidden">

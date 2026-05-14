@@ -1,5 +1,6 @@
 "use server"
-import prisma from "../db"
+import prisma from "@/lib/db"
+import { getUserRole } from "@/lib/dal";
 import { revalidateTag, revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
@@ -41,6 +42,12 @@ export async function createMenuCategory(
   prevState: MenuCategoryState,
   formData: FormData
 ) {
+
+const userRole = await getUserRole()
+ if (userRole !== 'ADMIN') {
+    return null
+  }
+
   const rawData = {
     title: formData.get("title"),
   }
@@ -73,6 +80,13 @@ export async function createMenuItem(
   prevState: MenuItemState,
   formData: FormData
 ) {
+
+  const userRole = await getUserRole()
+ if (userRole !== 'ADMIN') {
+    return null
+  }
+   
+
   const rawData = {
     name: formData.get("name"),
     imageUrl: formData.get("imageUrl"),
@@ -112,6 +126,12 @@ export async function createMenuItem(
   redirect("/dashboard/items")
 }
 export async function deleteMenuCategory(id: string) {
+
+  const userRole = await getUserRole()
+ if (userRole !== 'ADMIN') {
+    return null
+  }
+
   await prisma.menuCategory.delete({
     where: {
       id: id,
@@ -124,6 +144,10 @@ export async function deleteMenuCategory(id: string) {
 }
 
 export async function deleteMenuItem(id: string) {
+  const userRole = await getUserRole()
+ if (userRole !== 'ADMIN') {
+    return null
+  }
   await prisma.menuItem.delete({
     where: {
       id: id,
@@ -140,6 +164,12 @@ export async function updateMenuCategory(
     formData: FormData,
     prevState: MenuCategoryState,
 ) {
+
+  const userRole = await getUserRole()
+ if (userRole !== 'ADMIN') {
+    return null
+  }
+
   const rawData = {
     title: formData.get("title"),
   }
@@ -171,6 +201,12 @@ export async function updateMenuItem(
   prevState: MenuItemState,
   formData: FormData
 ) {
+
+  const userRole = await getUserRole()
+ if (userRole !== 'ADMIN') {
+    return null
+  }
+  
   const rawData = {
     name: formData.get("name"),
     imageUrl: formData.get("imageUrl"),

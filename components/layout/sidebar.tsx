@@ -15,7 +15,7 @@ import {
 
 const links = [
   {
-    name: "Overview",
+    name: "Analytics",
     href: "/dashboard",
     icon: LayoutDashboard,
   },
