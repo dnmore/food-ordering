@@ -2,9 +2,11 @@
 
 import { useContext } from "react"
 import CartContext from "@/app/context/cart-context"
+import type { Session } from "next-auth"
 import Link from "next/link"
 import { ShoppingCart, Trash2, Plus, Minus } from "lucide-react"
 import { Button } from "@/components/ui/button"
+
 
 import {
   DropdownMenu,
@@ -13,7 +15,10 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 
-export default function Cart() {
+type CartProps = {
+  session: Session | null
+}
+export default function Cart({ session }: CartProps) {
   const {
     cartItems,
     totalItems,
@@ -28,11 +33,12 @@ export default function Cart() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
+       
           variant="outline"
           size="icon"
           type="button"
           aria-label={`Shopping cart with ${totalItems} items`}
-          className="relative inline-flex items-center justify-center p-5"
+          className="relative inline-flex items-center justify-center"
         >
           <ShoppingCart className="h-5 w-5" />
 
@@ -161,9 +167,16 @@ export default function Cart() {
                 <Button onClick={clearCart} variant="outline">
                   Clear Cart
                 </Button>
-                <Button asChild>
+                {session ? (
+                  <Button asChild>
                   <Link href="/checkout">Checkout</Link>
                 </Button>
+                ) : (
+                  <Button disabled>
+                     Login to Checkout
+                  </Button>
+                 
+                )}
               </div>
             </div>
           </>
