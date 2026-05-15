@@ -16,8 +16,8 @@ export default function Page() {
           From juicy burgers to Tex-Mex delights, nachos, nuggets, and
           irresistible desserts, satisfy every craving today!
         </div>
-        <Button variant="link" size="lg" className="mt-2 px-6">
-          <Link href="/menu">Explore</Link>
+        <Button asChild size="lg" className="mt-2 px-6">
+          <Link href="/menu/categories/Appetizers">Explore</Link>
         </Button>
       </div>
     </div>

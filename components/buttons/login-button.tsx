@@ -2,7 +2,7 @@
 
 import { useFormStatus } from "react-dom"
 import { Button } from "@/components/ui/button"
-import { Loader } from "lucide-react"
+
 
 export function LoginButton() {
   const { pending } = useFormStatus()
@@ -14,14 +14,7 @@ export function LoginButton() {
       disabled={pending}
       className="flex items-center gap-2"
     >
-      {pending ? (
-        <>
-          <Loader className="mr-2 h-4 w-4 animate-spin" />
-          Logging in...
-        </>
-      ) : (
-        <>Login</>
-      )}
+      Login
     </Button>
   )
 }

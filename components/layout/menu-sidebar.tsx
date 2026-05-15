@@ -10,15 +10,10 @@ import {
   Salad,
   IceCreamBowl,
   Flame,
-  UtensilsCrossed,
+  
 } from "lucide-react"
 
 const links = [
-  {
-    category: "Menu",
-    href: "/menu",
-    icon: UtensilsCrossed,
-  },
   {
     category: "Appetizers",
     href: "/menu/categories/Appetizers",

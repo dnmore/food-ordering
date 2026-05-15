@@ -25,7 +25,10 @@ export default async function Navbar() {
         aria-label="Main navigation"
         className="flex items-center justify-between"
       >
-        <p className="font-mono font-medium">CraveWaves</p>
+        <Button variant="link" size="lg" >
+           <Link href="/" className="font-mono font-medium text-xl">CraveWaves</Link>
+        </Button>
+       
 
         <div className="flex items-center gap-2">
           {isAuthenticated?.user ? (
@@ -54,7 +57,7 @@ export default async function Navbar() {
                   className="w-40 p-2"
                 >
                   <DropdownMenuItem>
-                    <Link href="/menu">Menu</Link>
+                    <Link href="/menu/categories/Appetizers">Menu</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <CustomerNavigation />
