@@ -18,4 +18,9 @@ export const getUserRole = cache(async () => {
     return session?.user?.role
 })
 
-
+export const requireAdmin = cache(async () => {
+    const session = await verifySession()
+    if(!session || session.user.role !== 'ADMIN'){
+        redirect("/")
+    }
+})

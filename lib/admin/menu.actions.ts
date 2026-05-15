@@ -1,6 +1,6 @@
 "use server"
 import prisma from "@/lib/db"
-import { getUserRole } from "@/lib/dal";
+import { requireAdmin } from "@/lib/dal"
 import { revalidateTag, revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
@@ -27,26 +27,19 @@ export type MenuCategoryState = {
 
 export type MenuItemState = {
   errors?: {
-    name?: string[],
-    imageUrl?: string[],
-    price?: string[],
-    categoryId?:string[],
+    name?: string[]
+    imageUrl?: string[]
+    price?: string[]
+    categoryId?: string[]
   }
   message?: string | null
 }
-
-
-
 
 export async function createMenuCategory(
   prevState: MenuCategoryState,
   formData: FormData
 ) {
-
-const userRole = await getUserRole()
- if (userRole !== 'ADMIN') {
-    return null
-  }
+  await requireAdmin()
 
   const rawData = {
     title: formData.get("title"),
@@ -80,18 +73,13 @@ export async function createMenuItem(
   prevState: MenuItemState,
   formData: FormData
 ) {
-
-  const userRole = await getUserRole()
- if (userRole !== 'ADMIN') {
-    return null
-  }
-   
+  await requireAdmin()
 
   const rawData = {
     name: formData.get("name"),
     imageUrl: formData.get("imageUrl"),
     price: formData.get("price"),
-    categoryId: formData.get("categoryId")
+    categoryId: formData.get("categoryId"),
   }
 
   const validatedFields = MenuItemSchema.safeParse(rawData)
@@ -102,7 +90,7 @@ export async function createMenuItem(
         name: tree.properties?.name?.errors,
         imageUrl: tree.properties?.imageUrl?.errors,
         price: tree.properties?.price?.errors,
-        categoryId: tree.properties?.categoryId?.errors
+        categoryId: tree.properties?.categoryId?.errors,
       },
       message: "Missing or Invalid Fields. Failed to Create Menu Item.",
     }
@@ -115,8 +103,8 @@ export async function createMenuItem(
       imageUrl: imageUrl,
       price: price,
       category: {
-        connect: {id: categoryId}
-      }
+        connect: { id: categoryId },
+      },
     },
   })
 
@@ -126,11 +114,7 @@ export async function createMenuItem(
   redirect("/dashboard/items")
 }
 export async function deleteMenuCategory(id: string) {
-
-  const userRole = await getUserRole()
- if (userRole !== 'ADMIN') {
-    return null
-  }
+  await requireAdmin()
 
   await prisma.menuCategory.delete({
     where: {
@@ -144,10 +128,8 @@ export async function deleteMenuCategory(id: string) {
 }
 
 export async function deleteMenuItem(id: string) {
-  const userRole = await getUserRole()
- if (userRole !== 'ADMIN') {
-    return null
-  }
+  await requireAdmin()
+
   await prisma.menuItem.delete({
     where: {
       id: id,
@@ -161,14 +143,10 @@ export async function deleteMenuItem(id: string) {
 
 export async function updateMenuCategory(
   id: string,
-    formData: FormData,
-    prevState: MenuCategoryState,
+  formData: FormData,
+  prevState: MenuCategoryState
 ) {
-
-  const userRole = await getUserRole()
- if (userRole !== 'ADMIN') {
-    return null
-  }
+  await requireAdmin()
 
   const rawData = {
     title: formData.get("title"),
@@ -201,17 +179,13 @@ export async function updateMenuItem(
   prevState: MenuItemState,
   formData: FormData
 ) {
+  await requireAdmin()
 
-  const userRole = await getUserRole()
- if (userRole !== 'ADMIN') {
-    return null
-  }
-  
   const rawData = {
     name: formData.get("name"),
     imageUrl: formData.get("imageUrl"),
     price: formData.get("price"),
-    categoryId: formData.get("categoryId")
+    categoryId: formData.get("categoryId"),
   }
 
   const validatedFields = MenuItemSchema.safeParse(rawData)
@@ -222,7 +196,7 @@ export async function updateMenuItem(
         name: tree.properties?.name?.errors,
         imageUrl: tree.properties?.imageUrl?.errors,
         price: tree.properties?.price?.errors,
-        categoryId: tree.properties?.categoryId?.errors
+        categoryId: tree.properties?.categoryId?.errors,
       },
       message: "Missing or Invalid Fields. Failed to Update Menu Item.",
     }
@@ -236,8 +210,8 @@ export async function updateMenuItem(
       imageUrl: imageUrl,
       price: price,
       category: {
-        connect: {id: categoryId}
-      }
+        connect: { id: categoryId },
+      },
     },
   })
   revalidateTag("menuItems", "max")
