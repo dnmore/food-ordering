@@ -47,7 +47,7 @@ export const getMenuItemsTable = unstable_cache(
           },
         },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "asc" },
     })
     
     return menuData.map(item => ({
@@ -60,5 +60,41 @@ export const getMenuItemsTable = unstable_cache(
   },
 
   ["menu-items-table"],
+  { tags: ["menuItems"] },
+);
+
+export const getMenuItemsPerCategory = unstable_cache(
+  async (category: string): Promise<MenuItemTableRow[]> => {
+    const menuData = await prisma.menuItem.findMany({
+      where: {
+        category: {
+          title: category,
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        imageUrl: true,
+        price: true,
+        
+        category: {
+          select: {
+            title: true,
+          },
+        },
+      },
+      orderBy: { createdAt: "asc" },
+    })
+    
+    return menuData.map(item => ({
+        id: item.id,
+        name: item.name,
+        imageUrl: item.imageUrl,
+        price: Number(item.price),
+        categoryTitle: item.category.title
+      }))
+  },
+
+  ["menu-items-category"],
   { tags: ["menuItems"] },
 );

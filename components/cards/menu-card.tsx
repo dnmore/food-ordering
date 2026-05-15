@@ -35,7 +35,7 @@ export function MenuCard({ id, name, price, imageUrl, categoryTitle }: MenuItemT
          
         </CardDescription>
       </CardHeader>
-      <CardFooter>
+      <CardFooter className="mt-auto">
         <Button className="w-full" onClick={() => addToCart({ id, name, price, imageUrl, quantity: 1 })}>
           Add to Cart
         </Button>
