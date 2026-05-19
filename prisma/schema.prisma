@@ -22,6 +22,12 @@ enum Role {
   CUSTOMER
 }
 
+enum OrderStatus {
+  PENDING
+  PREPARING
+  COMPLETED
+}
+
 /// =======================
 /// MODELS
 /// =======================
@@ -69,6 +75,7 @@ model User {
   subscriptionStatus String?
   accounts      Account[]
   sessions      Session[]
+  orders        Order[]
 
   @@map("users")
 }
@@ -100,8 +107,60 @@ model MenuItem {
   categoryId String
   category   MenuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
+  orderItems OrderItem[]
+
   createdAt  DateTime     @default(now())
   
 
   @@index([categoryId])
+}
+
+model Order {
+  id              String        @id @default(cuid())
+
+  userId          String        @map("user_id")
+  customer        User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+
+  status          OrderStatus   @default(PENDING)
+
+  totalAmount     Decimal       @map("total_amount") @db.Decimal(10, 2)
+
+  completedAt     DateTime?     @map("completed_at")
+
+  items           OrderItem[]
+
+  createdAt       DateTime      @default(now()) @map("created_at")
+  
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([userId, status])
+  @@index([status, createdAt])
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id            String      @id @default(cuid())
+
+  orderId       String      @map("order_id")
+  order         Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  menuItemId    String      @map("menu_item_id")
+  menuItem      MenuItem    @relation(fields: [menuItemId], references: [id], onDelete: Restrict)
+
+  quantity      Int         @default(1)
+
+  unitPrice     Decimal     @map("unit_price") @db.Decimal(10, 2)
+
+  totalPrice    Decimal     @map("total_price") @db.Decimal(10, 2)
+
+  createdAt     DateTime    @default(now()) @map("created_at")
+
+  @@index([orderId])
+  @@index([menuItemId])
+  @@index([orderId, menuItemId])
+
+  @@map("order_items")
 }
