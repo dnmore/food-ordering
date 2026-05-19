@@ -1,6 +1,7 @@
 import {redirect} from "next/navigation"
 import { verifySession } from "@/lib/dal"
 import CheckoutTable from "@/components/table/checkout-table"
+import { CheckoutForm } from "@/components/forms/checkout-form"
 
 export default async function Page() {
   const session = await verifySession()
@@ -14,6 +15,7 @@ export default async function Page() {
         <h1 className="mb-6 text-3xl font-extrabold md:text-5xl">Checkout</h1>
 
         <CheckoutTable />
+        <CheckoutForm />
       </div>
     </div>
   )

@@ -24,3 +24,15 @@ export type CartItem = Omit<MenuItem, "categoryId" | "createdAt"> & {
   quantity: number
 }
 
+export type OrderItem = Omit<CartItem, "imageUrl"> & {
+  menuItemId: string
+}
+
+export type CreateOrderItemPayload = {
+  menuItemId: string;
+  quantity: number;
+}
+
+export type CreateOrderPayload = {
+  items: CreateOrderItemPayload[];
+}
