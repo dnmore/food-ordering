@@ -23,6 +23,43 @@ export type Order = {
   createdAt: Date
 }
 
+export type OrderDetails = {
+  id: string
+  userId: string
+
+  status: "PENDING" | "PREPARING" | "COMPLETED"
+
+  totalAmount: number
+
+  completedAt: Date | null
+  createdAt: Date
+
+  customer: {
+    id: string
+    name: string 
+    email: string 
+  }
+
+  items: {
+    id: string
+
+    orderId: string
+    menuItemId: string
+
+    quantity: number
+
+    unitPrice: number
+    totalPrice: number
+
+    createdAt: Date
+
+    menuItem: {
+      id: string
+      name: string
+      price: number
+    }
+  }[]
+}
 export type CategorySelectOption = Omit<MenuCategory, "createdAt">
 
 export type MenuCategoryTableRow = Omit<MenuCategory, "createdAt">

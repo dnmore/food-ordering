@@ -1,9 +1,9 @@
 "use client"
 
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import { OrderTableRow } from "@/lib/definitions"
 import { ColumnDef } from "@tanstack/react-table"
-
 
 export const orderColumns: ColumnDef<OrderTableRow>[] = [
   {
@@ -30,13 +30,10 @@ export const orderColumns: ColumnDef<OrderTableRow>[] = [
     accessorKey: "createdAt",
     header: "Created",
     cell: ({ row }) => {
-    const date = new Date(row.getValue("createdAt"))
+      const date = new Date(row.getValue("createdAt")).toLocaleString()
 
-    const formatted = new Intl.DateTimeFormat("sv-SE").format(date)
-    
-
-    return <div>{formatted}</div>
-  },
+      return <div>{date}</div>
+    },
   },
   {
     id: "actions",
@@ -45,8 +42,10 @@ export const orderColumns: ColumnDef<OrderTableRow>[] = [
 
       return (
         <div className="flex gap-2">
-           <p>view</p>
-           <p>update</p>
+          <Button asChild variant="link" size="lg">
+          <Link href={`/dashboard/orders/${item.id}/details`}>view</Link>
+          </Button>
+          <p>update</p>
         </div>
       )
     },
