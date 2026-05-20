@@ -1,6 +1,6 @@
 import prisma from "./db";
 import { unstable_cache } from "next/cache";
-import { CategorySelectOption, MenuCategoryTableRow, MenuItemTableRow } from "./definitions";
+import { CategorySelectOption, MenuCategoryTableRow, MenuItemTableRow, OrderTableRow } from "./definitions";
 
 export const getCategoriesSelectOptions = unstable_cache(
   async (): Promise<CategorySelectOption[]> => {
@@ -97,4 +97,28 @@ export const getMenuItemsPerCategory = unstable_cache(
 
   ["menu-items-category"],
   { tags: ["menuItems"] },
+);
+
+export const getOrdersTable = unstable_cache(
+  async (): Promise<OrderTableRow[]> => {
+    const orderData = await prisma.order.findMany({
+      select: {
+        id: true,
+        status: true,
+        totalAmount: true,
+        createdAt: true,
+       
+        
+      },
+      orderBy: { createdAt: "asc" },
+    });
+    return orderData.map(item => ({
+        id: item.id,
+        status: item.status,
+        totalAmount: Number(item.totalAmount),
+        createdAt: item.createdAt
+      }))
+  },
+  ["orders-table"],
+  { tags: ["orders"] },
 );

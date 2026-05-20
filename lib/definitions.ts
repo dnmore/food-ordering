@@ -13,13 +13,25 @@ export type MenuItem = {
   createdAt: Date
 }
 
+export type Order = {
+  id: string
+  userId: string
+  status: "PENDING" | "PREPARING" | "COMPLETED"
+  totalAmount: number
+  completedAt: Date | null
+  items: OrderItem[]
+  createdAt: Date
+}
+
 export type CategorySelectOption = Omit<MenuCategory, "createdAt">
 
-export type MenuCategoryTableRow = Omit <MenuCategory, "createdAt">
+export type MenuCategoryTableRow = Omit<MenuCategory, "createdAt">
 
 export type MenuItemTableRow = Omit<MenuItem, "categoryId" | "createdAt"> & {
   categoryTitle: string
 }
+
+export type OrderTableRow = Omit<Order, "userId" | "completedAt" | "items" | "createdAt">
 export type CartItem = Omit<MenuItem, "categoryId" | "createdAt"> & {
   quantity: number
 }
@@ -29,10 +41,10 @@ export type OrderItem = Omit<CartItem, "imageUrl"> & {
 }
 
 export type CreateOrderItemPayload = {
-  menuItemId: string;
-  quantity: number;
+  menuItemId: string
+  quantity: number
 }
 
 export type CreateOrderPayload = {
-  items: CreateOrderItemPayload[];
+  items: CreateOrderItemPayload[]
 }

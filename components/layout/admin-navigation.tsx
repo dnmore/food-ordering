@@ -27,6 +27,9 @@ export default async function AdminNavigation() {
     <DropdownMenuItem>
       <Link href="/dashboard/items">Items</Link>
     </DropdownMenuItem>
+    <DropdownMenuItem>
+      <Link href="/dashboard/orders">Orders</Link>
+    </DropdownMenuItem>
     </DropdownMenuGroup>
     
   )
