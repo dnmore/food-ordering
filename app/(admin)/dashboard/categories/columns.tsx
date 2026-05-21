@@ -1,11 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { MenuCategoryTableRow } from "@/lib/definitions"
+import { CategorySelectOption } from "@/lib/definitions"
 import { DeleteCategoryButton } from "@/components/ui/delete-button"
 import { ColumnDef } from "@tanstack/react-table"
 
-export const categoriesColumns: ColumnDef<MenuCategoryTableRow>[] = [
+export const categoriesColumns: ColumnDef<CategorySelectOption>[] = [
   {
     accessorKey: "title",
     header: "Title",

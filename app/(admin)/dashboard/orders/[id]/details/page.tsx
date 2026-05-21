@@ -1,7 +1,5 @@
-import Link from "next/link"
 import { getOrderDetails } from "@/lib/data"
 import {OrderTable} from "@/components/table/order-table"
-import { Button } from "@/components/ui/button"
 import { notFound } from "next/navigation"
 
 

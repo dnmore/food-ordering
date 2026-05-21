@@ -45,7 +45,9 @@ export const orderColumns: ColumnDef<OrderTableRow>[] = [
           <Button asChild variant="link" size="lg">
           <Link href={`/dashboard/orders/${item.id}/details`}>view</Link>
           </Button>
-          <p>update</p>
+           <Button asChild variant="link" size="lg">
+          <Link href={`/dashboard/orders/${item.id}/edit`}>edit</Link>
+          </Button>
         </div>
       )
     },

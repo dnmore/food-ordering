@@ -62,8 +62,6 @@ export type OrderDetails = {
 }
 export type CategorySelectOption = Omit<MenuCategory, "createdAt">
 
-export type MenuCategoryTableRow = Omit<MenuCategory, "createdAt">
-
 export type MenuItemTableRow = Omit<MenuItem, "categoryId" | "createdAt"> & {
   categoryTitle: string
 }
@@ -82,6 +80,8 @@ export type CreateOrderItemPayload = {
   quantity: number
 }
 
-export type CreateOrderPayload = {
-  items: CreateOrderItemPayload[]
+
+export type OrderStatusSelectOption = {
+  status: string
 }
+

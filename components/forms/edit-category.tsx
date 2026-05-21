@@ -1,6 +1,6 @@
 "use client"
 import { updateMenuCategory, MenuCategoryState } from "@/lib/admin/menu.actions"
-import { MenuCategoryTableRow } from "@/lib/definitions"
+import { CategorySelectOption } from "@/lib/definitions"
 import { useActionState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 
 
-export default function EditMenuCategoryForm({ category }: { category: MenuCategoryTableRow }) {
+export default function EditMenuCategoryForm({ category }: { category: CategorySelectOption}) {
   const initialState: MenuCategoryState = {
     message: null,
     errors: {},
