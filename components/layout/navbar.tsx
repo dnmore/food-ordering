@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import AdminNavigation from "@/components/layout/admin-navigation"
-import CustomerNavigation from "@/components/layout/customer-navigation"
+
 
 export default async function Navbar() {
   const isAuthenticated = await verifySession()
@@ -59,8 +59,8 @@ export default async function Navbar() {
                   <DropdownMenuItem>
                     <Link href="/menu/categories/Appetizers">Menu</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <CustomerNavigation />
+                 
+              
                   <AdminNavigation />
                   <DropdownMenuSeparator />
 

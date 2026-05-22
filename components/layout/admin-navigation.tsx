@@ -4,7 +4,8 @@ import {
   
   DropdownMenuItem,
   DropdownMenuGroup,
-  DropdownMenuLabel
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
 
 } from "@/components/ui/dropdown-menu"
 
@@ -16,7 +17,10 @@ export default async function AdminNavigation() {
   }
 
   return (
-    <DropdownMenuGroup>
+    <>
+     <DropdownMenuSeparator />
+     <DropdownMenuGroup>
+
       <DropdownMenuLabel>Admin Panel</DropdownMenuLabel>
       <DropdownMenuItem>
       <Link href="/dashboard">Analytics</Link>
@@ -31,6 +35,8 @@ export default async function AdminNavigation() {
       <Link href="/dashboard/orders">Orders</Link>
     </DropdownMenuItem>
     </DropdownMenuGroup>
+    </>
+    
     
   )
 }

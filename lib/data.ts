@@ -207,16 +207,3 @@ export const getOrderDetails = unstable_cache(
   }
 )
 
-export const getOrderStatusSelectOptions = unstable_cache(
-  async (): Promise<OrderStatusSelectOption[]> => {
-    return prisma.order.findMany({
-      select: {
-        id: true,
-        status: true,
-      },
-      orderBy: { status: "asc" },
-    })
-  },
-  ["orders-select"],
-  { tags: ["orders"] }
-)

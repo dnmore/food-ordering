@@ -1,11 +1,10 @@
 import prisma from "@/lib/db"
 import EditOrderStatusForm from "@/components/forms/edit-status"
-import { getOrderStatusSelectOptions } from "@/lib/data"
 import { notFound } from "next/navigation"
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const { id } = await props.params
-  const statusOptions = await getOrderStatusSelectOptions()
+ 
   
 
   const itemToUpdate = await prisma?.order.findUnique({
