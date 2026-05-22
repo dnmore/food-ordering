@@ -1,6 +1,6 @@
 "use client"
-import { useContext } from "react"
-import CartContext from "@/app/context/cart-context"
+
+import { useCartStore } from "@/app/store/useCartStore"
 import {
   Table,
   TableBody,
@@ -12,12 +12,15 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+export default function CheckoutTable() {
+  const { cartItems } = useCartStore()
 
-export default function CheckoutTable(){
-    const { cartItems, totalPrice } = useContext(CartContext)
+  const totalPrice = useCartStore((state) =>
+    state.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  )
 
-    return(
-         <Table className="w-full max-w-2xl">
+  return (
+    <Table className="w-full max-w-2xl">
       <TableCaption>Summary of selected products</TableCaption>
       <TableHeader>
         <TableRow>
@@ -31,17 +34,27 @@ export default function CheckoutTable(){
           <TableRow key={item.id}>
             <TableCell>{item.name}</TableCell>
             <TableCell className="text-center">{item.quantity}</TableCell>
-            
-            <TableCell className="text-right">{(item.price * item.quantity).toLocaleString("it-IT", { style: "currency", currency: "EUR" })}</TableCell>
+
+            <TableCell className="text-right">
+              {(item.price * item.quantity).toLocaleString("it-IT", {
+                style: "currency",
+                currency: "EUR",
+              })}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
       <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">{totalPrice.toLocaleString("it-IT", { style: "currency", currency: "EUR" })}</TableCell>
+          <TableCell className="text-right">
+            {totalPrice.toLocaleString("it-IT", {
+              style: "currency",
+              currency: "EUR",
+            })}
+          </TableCell>
         </TableRow>
       </TableFooter>
     </Table>
-    )
+  )
 }

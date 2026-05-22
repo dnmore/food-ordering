@@ -2,11 +2,11 @@ import { Geist, Geist_Mono, Figtree } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { CartProvider } from "./context/cart-context";
-import { cn } from "@/lib/utils";
+
+import { cn } from "@/lib/utils"
 import Navbar from "@/components/layout/navbar"
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'})
+const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -22,17 +22,20 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", figtree.variable)}
+      className={cn(
+        "antialiased",
+        fontMono.variable,
+        "font-sans",
+        figtree.variable
+      )}
     >
       <body>
         <ThemeProvider>
-          <CartProvider>
-          <main className="min-h-screen flex flex-col">
+          <main className="flex min-h-screen flex-col">
             <Navbar />
             {children}
           </main>
-          </CartProvider>
-          </ThemeProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
