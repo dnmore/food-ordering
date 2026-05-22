@@ -1,13 +1,13 @@
 "use client"
 
-import { useContext, useActionState } from "react"
-import CartContext from "@/app/context/cart-context"
+import { useActionState } from "react"
+import { useCartStore } from "@/app/store/useCartStore"
 
 import { createOrder, CreateOrderState } from "@/lib/customer/order.actions"
 import { CheckoutButton } from "@/components/buttons/checkout-button"
 
 export function CheckoutForm() {
-  const { cartItems } = useContext(CartContext)
+  const { cartItems } = useCartStore()
   const initialState: CreateOrderState = {
   message: null,
   errors: {},

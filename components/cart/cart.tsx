@@ -1,12 +1,10 @@
 "use client"
 
-import { useContext } from "react"
-import CartContext from "@/app/context/cart-context"
+import { useCartStore } from "@/app/store/useCartStore"
 import type { Session } from "next-auth"
 import Link from "next/link"
 import { ShoppingCart, Trash2, Plus, Minus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
 
 import {
   DropdownMenu,
@@ -21,19 +19,24 @@ type CartProps = {
 export default function Cart({ session }: CartProps) {
   const {
     cartItems,
-    totalItems,
-    totalPrice,
     removeFromCart,
     increaseQuantity,
     decreaseQuantity,
     clearCart,
-  } = useContext(CartContext)
+  } = useCartStore()
+
+  const totalItems = useCartStore((state) =>
+    state.cartItems.reduce((acc, item) => acc + item.quantity, 0)
+  )
+
+  const totalPrice = useCartStore((state) =>
+    state.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  )
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-       
           variant="outline"
           size="icon"
           type="button"
@@ -169,13 +172,10 @@ export default function Cart({ session }: CartProps) {
                 </Button>
                 {session ? (
                   <Button asChild>
-                  <Link href="/checkout">Checkout</Link>
-                </Button>
-                ) : (
-                  <Button disabled>
-                     Login to Checkout
+                    <Link href="/checkout">Checkout</Link>
                   </Button>
-                 
+                ) : (
+                  <Button disabled>Login to Checkout</Button>
                 )}
               </div>
             </div>

@@ -1,6 +1,5 @@
 "use client";
-import { useContext } from "react"
-import CartContext from "@/app/context/cart-context"
+import { useCartStore } from "@/app/store/useCartStore"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,7 +15,7 @@ import { MenuItemTableRow } from "@/lib/definitions"
 
 
 export function MenuCard({ id, name, price, imageUrl, categoryTitle }: MenuItemTableRow) {
-  const { addToCart } = useContext(CartContext)
+  const { addToCart } = useCartStore()
   return (
     <Card className="relative mx-auto w-full max-w-sm pt-0">
       <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
