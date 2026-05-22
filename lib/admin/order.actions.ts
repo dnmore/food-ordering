@@ -7,7 +7,7 @@ import { z } from "zod"
 import { ORDER_STATUS_OPTIONS } from "@/lib/constants"
 
 const OrderStatusSchema = z.object({
-    status: z.enum(ORDER_STATUS_OPTIONS),
+  status: z.enum(ORDER_STATUS_OPTIONS),
 })
 
 export type OrderStatusState = {
@@ -38,11 +38,16 @@ export async function updateOrderStatus(
     }
   }
   const { status } = validatedFields.data
+  const isCompleted = status === "COMPLETED"
+
+  const updateData = {
+    status,
+    completedAt: isCompleted ? new Date() : null,
+  }
+
   await prisma.order.update({
-    where: { id: id },
-    data: {
-      status: status,
-    },
+    where: { id },
+    data: updateData,
   })
   revalidateTag("orders", "max")
   revalidateTag("dashboard", "max")
