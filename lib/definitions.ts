@@ -81,7 +81,5 @@ export type CreateOrderItemPayload = {
 }
 
 
-export type OrderStatusSelectOption = {
-  status: string
-}
+
 

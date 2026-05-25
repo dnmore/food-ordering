@@ -5,8 +5,6 @@ import {
   MenuItemTableRow,
   OrderTableRow,
   OrderDetails,
-  OrderStatusSelectOption
-  
 } from "./definitions"
 
 export const getCategoriesSelectOptions = unstable_cache(
@@ -126,7 +124,6 @@ export const getOrdersTable = unstable_cache(
   { tags: ["orders"] }
 )
 
-
 export const getOrderDetails = unstable_cache(
   async (orderId: string): Promise<OrderDetails | null> => {
     const order = await prisma.order.findUnique({
@@ -153,8 +150,6 @@ export const getOrderDetails = unstable_cache(
               },
             },
           },
-
-          
         },
       },
     })
@@ -207,3 +202,46 @@ export const getOrderDetails = unstable_cache(
   }
 )
 
+export const getDashboardStats = unstable_cache(
+  async () => {
+    const [totalOrders, revenueResult, aovResult] = await Promise.all([
+      prisma.order.count(),
+
+      prisma.order.aggregate({
+        where: {
+          status: "COMPLETED",
+        },
+        _sum: {
+          totalAmount: true,
+        },
+      }),
+
+      prisma.order.aggregate({
+        where: {
+          status: "COMPLETED",
+        },
+        _avg: {
+          totalAmount: true,
+        },
+      }),
+    ])
+
+    const formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "EUR",
+    })
+
+    return {
+      totalOrders,
+
+      totalRevenue: formatter.format(
+        revenueResult._sum.totalAmount?.toNumber() ?? 0
+      ),
+      averageOrderValue: formatter.format(
+        aovResult._avg.totalAmount?.toNumber() ?? 0
+      ),
+    }
+  },
+  ["dashboard-stats"],
+  { tags: ["dashboard", "orders"] }
+)
