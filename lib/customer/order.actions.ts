@@ -17,6 +17,7 @@ const CreateOrderSchema = z.object({
 })
 
 export type CreateOrderState = {
+  success: boolean
   errors?: {
     items?: string[]
   }
@@ -35,7 +36,9 @@ export async function createOrder(
 
   const rawItems = formData.getAll("items")
 
-  const parsedItems = rawItems.map((item) => JSON.parse(item as string))
+  const parsedItems = rawItems.map((item) =>
+    JSON.parse(item as string)
+  )
 
   const validatedFields = CreateOrderSchema.safeParse({
     items: parsedItems,
@@ -45,10 +48,10 @@ export async function createOrder(
     const tree = z.treeifyError(validatedFields.error)
 
     return {
+      success: false,
       errors: {
         items: tree.properties?.items?.errors,
       },
-
       message: "Invalid order submission.",
     }
   }
@@ -65,12 +68,15 @@ export async function createOrder(
 
   if (menuItems.length !== items.length) {
     return {
+      success: false,
       message: "Some menu items no longer exist.",
     }
   }
 
   const orderItems = items.map((cartItem) => {
-    const menuItem = menuItems.find((item) => item.id === cartItem.menuItemId)
+    const menuItem = menuItems.find(
+      (item) => item.id === cartItem.menuItemId
+    )
 
     if (!menuItem) {
       throw new Error("Menu item not found")
@@ -94,11 +100,8 @@ export async function createOrder(
   await prisma.order.create({
     data: {
       userId: session.user.id,
-
       status: OrderStatus.PENDING,
-
       totalAmount,
-
       items: {
         create: orderItems,
       },
@@ -106,5 +109,9 @@ export async function createOrder(
   })
 
   revalidatePath("/dashboard/orders")
-  redirect("/checkout/success")
+
+  return {
+    success: true,
+    message: "Order created successfully.",
+  }
 }
