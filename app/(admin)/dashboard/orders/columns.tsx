@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { OrderTableRow } from "@/lib/definitions"
 import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown } from "lucide-react"
 
 export const orderColumns: ColumnDef<OrderTableRow>[] = [
   {
@@ -12,23 +13,53 @@ export const orderColumns: ColumnDef<OrderTableRow>[] = [
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "totalAmount",
-    header: "Total",
+     header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Total
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("totalAmount"))
       const formatted = new Intl.NumberFormat("it-IT", {
         style: "currency",
         currency: "EUR",
       }).format(amount)
-      return <div className="font-medium">{formatted}</div>
+      return <div className="font-medium px-3">{formatted}</div>
     },
   },
   {
     accessorKey: "createdAt",
-    header: "Created",
+     header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Created
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdAt")).toLocaleString()
 

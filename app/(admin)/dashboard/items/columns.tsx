@@ -2,14 +2,26 @@
 
 import Link from "next/link"
 import { MenuItemTableRow } from "@/lib/definitions"
-import { DeleteItemButton } from "@/components/ui/delete-button"
+import { Button } from "@/components/ui/button"
+import { DeleteItemButton } from "@/components/buttons/delete-button"
 import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown } from "lucide-react"
 
 
 export const menuItemsColumns: ColumnDef<MenuItemTableRow>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "imageUrl",
@@ -17,14 +29,24 @@ export const menuItemsColumns: ColumnDef<MenuItemTableRow>[] = [
   },
   {
     accessorKey: "price",
-    header: "Price",
+     header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price"))
       const formatted = new Intl.NumberFormat("it-IT", {
         style: "currency",
         currency: "EUR",
       }).format(amount)
-      return <div className="font-medium">{formatted}</div>
+      return <div className="font-medium px-3">{formatted}</div>
     },
   },
   {
