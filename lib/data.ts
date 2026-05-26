@@ -245,3 +245,48 @@ export const getDashboardStats = unstable_cache(
   ["dashboard-stats"],
   { tags: ["dashboard", "orders"] }
 )
+
+
+export const getRevenueChartData = unstable_cache(
+  async () => {
+    const orders = await prisma.order.findMany({
+      where: {
+        status: "COMPLETED",
+      },
+      select: {
+        createdAt: true,
+        totalAmount: true,
+      },
+      orderBy: {
+        createdAt: "asc",
+      },
+ 
+    })
+
+    const revenueByDay = new Map<string, number>()
+
+    for (const order of orders) {
+      const day = new Intl.DateTimeFormat("en-GB").format(
+        order.createdAt
+      )
+
+      const currentRevenue = revenueByDay.get(day) ?? 0
+
+      revenueByDay.set(
+        day,
+        currentRevenue + order.totalAmount.toNumber()
+      )
+    }
+
+    return Array.from(revenueByDay.entries()).map(
+      ([day, revenue]) => ({
+        day,
+        revenue,
+      })
+    )
+  },
+  ["revenue-chart"],
+  {
+    tags: ["dashboard", "orders"],
+  }
+)

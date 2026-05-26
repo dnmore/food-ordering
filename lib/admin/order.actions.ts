@@ -51,6 +51,7 @@ export async function updateOrderStatus(
   })
   revalidateTag("orders", "max")
   revalidateTag("dashboard", "max")
+  revalidatePath("/dashboard")
   revalidatePath("/dashboard/orders")
   revalidatePath(`/dashboard/orders/${id}/details`)
   redirect("/dashboard/orders")
