@@ -1,6 +1,6 @@
 import { getDashboardStats } from "@/lib/data"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
-import { DollarSign, ShoppingBag, ReceiptText, EuroIcon, ChartNoAxesColumn } from "lucide-react"
+import { ShoppingBag, EuroIcon, ChartNoAxesColumn } from "lucide-react"
 
 const iconMap = {
   
@@ -24,21 +24,21 @@ export default async function DashboardCards() {
         title="Total Revenue"
         value={totalRevenue}
         type="revenue"
-        className="bg-emerald-100 text-emerald-600 rounded-full p-3 w-xs"
+        className="bg-emerald-100 text-emerald-600 rounded-full p-3 w-sm"
       />
 
       <DashboardCard
         title="Total Orders"
         value={totalOrders}
         type="orders"
-        className="bg-blue-100 text-blue-600 rounded-full p-3 w-xs"
+        className="bg-blue-100 text-blue-600 rounded-full p-3 w-sm"
       />
 
       <DashboardCard
         value={averageOrderValue}
         title="Average Order Value"
         type="aov"
-        className="bg-orange-100 text-orange-600 rounded-full p-3 w-xs"
+        className="bg-orange-100 text-orange-600 rounded-full p-3 w-sm"
       />
     </div>
   )
