@@ -223,11 +223,9 @@ export const getDashboardStats = unstable_cache(
     return {
       totalOrders,
 
-      totalRevenue:
-        stats._sum.totalAmount?.toNumber() ?? 0,
+      totalRevenue: stats._sum.totalAmount?.toNumber() ?? 0,
 
-      averageOrderValue:
-        stats._avg.totalAmount?.toNumber() ?? 0,
+      averageOrderValue: stats._avg.totalAmount?.toNumber() ?? 0,
     }
   },
   ["dashboard-stats"],
@@ -249,30 +247,22 @@ export const getRevenueChartData = unstable_cache(
       orderBy: {
         createdAt: "asc",
       },
- 
     })
 
     const revenueByDay = new Map<string, number>()
 
     for (const order of orders) {
-      const day = new Intl.DateTimeFormat("en-GB").format(
-        order.createdAt
-      )
+      const day = new Intl.DateTimeFormat("en-GB").format(order.createdAt)
 
       const currentRevenue = revenueByDay.get(day) ?? 0
 
-      revenueByDay.set(
-        day,
-        currentRevenue + order.totalAmount.toNumber()
-      )
+      revenueByDay.set(day, currentRevenue + order.totalAmount.toNumber())
     }
 
-    return Array.from(revenueByDay.entries()).map(
-      ([day, revenue]) => ({
-        day,
-        revenue,
-      })
-    )
+    return Array.from(revenueByDay.entries()).map(([day, revenue]) => ({
+      day,
+      revenue,
+    }))
   },
   ["revenue-chart"],
   {
@@ -280,46 +270,48 @@ export const getRevenueChartData = unstable_cache(
   }
 )
 
-
 export const getTopSellingChartData = unstable_cache(
-  async ()=> {
+  async () => {
     const topItems = await prisma.orderItem.groupBy({
-    by: ["menuItemId"],
-    where: {
-      order: {
-        status: "COMPLETED",
+      by: ["menuItemId"],
+      where: {
+        order: {
+          status: "COMPLETED",
+        },
       },
-    },
-    _sum: {
-      totalPrice: true,
-    },
-    orderBy: {
       _sum: {
-        totalPrice: "desc",
+        totalPrice: true,
       },
-    },
-    take: 5,
-  });
-
-  const items = await Promise.all(
-    topItems.map(async (item) => {
-      const menuItem = await prisma.menuItem.findUnique({
-        where: {
-          id: item.menuItemId,
+      orderBy: {
+        _sum: {
+          totalPrice: "desc",
         },
-        select: {
-          name: true,
-        },
-      });
-
-      return {
-        name: menuItem?.name ?? "Unknown",
-        revenue: Number(item._sum.totalPrice ?? 0),
-      };
+      },
+      take: 5,
     })
-  );
 
-  return items;
+    const items = await Promise.all(
+      topItems.map(async (item) => {
+        const menuItem = await prisma.menuItem.findUnique({
+          where: {
+            id: item.menuItemId,
+          },
+          select: {
+            name: true,
+          },
+        })
 
-}
+        return {
+          name: menuItem?.name ?? "Unknown",
+          revenue: Number(item._sum.totalPrice ?? 0),
+        }
+      })
+    )
+
+    return items
+  },
+  ["top-selling-chart"],
+  {
+    tags: ["dashboard", "orders"],
+  }
 )
