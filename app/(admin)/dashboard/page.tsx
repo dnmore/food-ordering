@@ -1,5 +1,6 @@
 import DashboardCards from "@/components/cards/dashboard-cards"
 import { RevenueCard } from "@/components/cards/revenue-card"
+import { TopSellingCard } from "@/components/cards/top-selling-card"
 
 
 export default function Page(){
@@ -8,6 +9,7 @@ export default function Page(){
             <h1 className="text-2xl font-bold">Analytics</h1>
             <DashboardCards />
             <RevenueCard />
+            <TopSellingCard />
         </div>
     )
 }

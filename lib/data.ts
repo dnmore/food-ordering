@@ -204,7 +204,7 @@ export const getOrderDetails = unstable_cache(
 
 export const getDashboardStats = unstable_cache(
   async () => {
-    const [totalOrders, revenueResult, aovResult] = await Promise.all([
+    const [totalOrders, stats] = await Promise.all([
       prisma.order.count(),
 
       prisma.order.aggregate({
@@ -214,38 +214,27 @@ export const getDashboardStats = unstable_cache(
         _sum: {
           totalAmount: true,
         },
-      }),
-
-      prisma.order.aggregate({
-        where: {
-          status: "COMPLETED",
-        },
         _avg: {
           totalAmount: true,
         },
       }),
     ])
 
-    const formatter = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "EUR",
-    })
-
     return {
       totalOrders,
 
-      totalRevenue: formatter.format(
-        revenueResult._sum.totalAmount?.toNumber() ?? 0
-      ),
-      averageOrderValue: formatter.format(
-        aovResult._avg.totalAmount?.toNumber() ?? 0
-      ),
+      totalRevenue:
+        stats._sum.totalAmount?.toNumber() ?? 0,
+
+      averageOrderValue:
+        stats._avg.totalAmount?.toNumber() ?? 0,
     }
   },
   ["dashboard-stats"],
-  { tags: ["dashboard", "orders"] }
+  {
+    tags: ["dashboard", "orders"],
+  }
 )
-
 
 export const getRevenueChartData = unstable_cache(
   async () => {
@@ -289,4 +278,48 @@ export const getRevenueChartData = unstable_cache(
   {
     tags: ["dashboard", "orders"],
   }
+)
+
+
+export const getTopSellingChartData = unstable_cache(
+  async ()=> {
+    const topItems = await prisma.orderItem.groupBy({
+    by: ["menuItemId"],
+    where: {
+      order: {
+        status: "COMPLETED",
+      },
+    },
+    _sum: {
+      totalPrice: true,
+    },
+    orderBy: {
+      _sum: {
+        totalPrice: "desc",
+      },
+    },
+    take: 5,
+  });
+
+  const items = await Promise.all(
+    topItems.map(async (item) => {
+      const menuItem = await prisma.menuItem.findUnique({
+        where: {
+          id: item.menuItemId,
+        },
+        select: {
+          name: true,
+        },
+      });
+
+      return {
+        name: menuItem?.name ?? "Unknown",
+        revenue: Number(item._sum.totalPrice ?? 0),
+      };
+    })
+  );
+
+  return items;
+
+}
 )
