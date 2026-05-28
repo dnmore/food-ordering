@@ -21,7 +21,7 @@ export async function TopSellingCard(){
         <CardTitle>Top Selling Items  </CardTitle>
         <CardDescription>January - June 2026</CardDescription>
       </CardHeader>
-      <CardContent className="pr-24">
+      <CardContent>
         <TopSellingChart chartData={chartData} />
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
