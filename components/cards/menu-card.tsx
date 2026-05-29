@@ -1,9 +1,10 @@
-"use client";
+"use client"
 import { useCartStore } from "@/app/store/useCartStore"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
+  CardContent,
   CardAction,
   CardDescription,
   CardFooter,
@@ -12,28 +13,49 @@ import {
 } from "@/components/ui/card"
 import { MenuItemTableRow } from "@/lib/definitions"
 
-export function MenuCard({ id, name, price, imageUrl, categoryTitle }: MenuItemTableRow) {
+export function MenuCard({
+  id,
+  name,
+  price,
+  imageUrl,
+  categoryTitle,
+}: MenuItemTableRow) {
   const { addToCart } = useCartStore()
   return (
-    <Card className="relative mx-auto w-full max-w-sm pt-0">
-      <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-      <img
-        src={imageUrl}
-        alt={name}
-        className="relative z-20 aspect-video w-full object-cover"
-      />
+    <Card size="sm" className="mx-auto w-full max-w-sm px-4">
       <CardHeader>
-        <CardAction>
-          <Badge variant="secondary">{categoryTitle}</Badge>
-        </CardAction>
-        <CardTitle>{name}</CardTitle>
-        <CardDescription>
-          <span className="font-bold text-lg text-foreground"> {price.toLocaleString("it-IT", { style: "currency", currency: "EUR" })}</span>
-         
-        </CardDescription>
+        <div className="flex items-center justify-between pb-4 border-b">
+          <div>
+            <Badge variant="outline" className="mb-2">
+              {categoryTitle}
+            </Badge>
+            <CardTitle className="text-lg font-semibold">
+              {name}
+            </CardTitle>
+          </div>
+          <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full">
+            <img
+              src={imageUrl}
+              alt={name}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
       </CardHeader>
-      <CardFooter className="mt-auto">
-        <Button className="w-full" onClick={() => addToCart({ id, name, price, imageUrl, quantity: 1 })}>
+      <CardContent>
+        <p className="text-base font-semibold">
+          {price.toLocaleString("it-IT", {
+            style: "currency",
+            currency: "EUR",
+          })}
+        </p>
+      </CardContent>
+      <CardFooter>
+        <Button
+          size="sm"
+          className="w-full"
+          onClick={() => addToCart({ id, name, price, imageUrl, quantity: 1 })}
+        >
           Add to Cart
         </Button>
       </CardFooter>
