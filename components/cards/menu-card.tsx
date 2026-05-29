@@ -12,8 +12,6 @@ import {
 } from "@/components/ui/card"
 import { MenuItemTableRow } from "@/lib/definitions"
 
-
-
 export function MenuCard({ id, name, price, imageUrl, categoryTitle }: MenuItemTableRow) {
   const { addToCart } = useCartStore()
   return (

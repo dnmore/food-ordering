@@ -1,6 +1,8 @@
+import { Suspense } from "react"
 import { getOrderDetails } from "@/lib/data"
 import {OrderTable} from "@/components/table/order-table"
 import { notFound } from "next/navigation"
+import { SkeletonTable } from "@/components/layout/skeletons"
 
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
@@ -15,7 +17,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     <div className="pt-6">
       <h1 className="mb-2 ml-1 text-2xl font-bold">Order Details</h1>
       <div className="container max-w-3xl py-10">
-        <OrderTable order={orderDetails} />
+        <Suspense fallback={<SkeletonTable/>}>
+          <OrderTable order={orderDetails} />
+        </Suspense>
+      
       </div>
        
     </div>

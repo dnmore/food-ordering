@@ -29,7 +29,7 @@ export default async function Page() {
 
         <div>
           <Button asChild size="lg">
-            <Link href="/menu">Continue Shopping</Link>
+            <Link href="/menu/categories/Appetizers">Continue Shopping</Link>
           </Button>
         </div>
       </div>
