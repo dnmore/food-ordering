@@ -5,6 +5,16 @@ import { DataTable } from "@/components/ui/data-table"
 import { categoriesColumns } from "../categories/columns"
 import { getCategoriesTable } from "@/lib/data"
 import { SkeletonTable } from "@/components/layout/skeletons"
+import { Folder } from 'lucide-react';
+
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 
 export default async function Page() {
   const categoriesData = await getCategoriesTable()
@@ -12,17 +22,34 @@ export default async function Page() {
   return (
     <div>
       <h1 className="text-2xl font-bold">Categories</h1>
-      <div className="mt-6 flex gap-4">
-        <Button asChild size="lg">
+      {categoriesData.length === 0 ? (
+        <Empty>
+  <EmptyHeader>
+    <EmptyMedia variant="icon">
+      <Folder />
+    </EmptyMedia>
+    <EmptyTitle>No Categories Yet</EmptyTitle>
+    <EmptyDescription>You haven&apos;t created any categories yet. Get started by creating your first category.</EmptyDescription>
+  </EmptyHeader>
+  <EmptyContent>
+     <Button asChild size="lg">
           <Link href="/dashboard/categories/create"> Add Category</Link>
         </Button>
-      </div>
-      <div className="container mx-auto py-10">
-        <Suspense fallback={<SkeletonTable/>}>
- <DataTable columns={categoriesColumns} data={categoriesData} />
+  </EmptyContent>
+</Empty>
+      ):(
+        <div className="container mx-auto py-10">
+        
+        <Button asChild size="lg" className="mb-2">
+          <Link href="/dashboard/categories/create"> Add Category</Link>
+        </Button>
+        <Suspense fallback={<SkeletonTable />}>
+          <DataTable columns={categoriesColumns} data={categoriesData} />
         </Suspense>
-       
       </div>
+      )}
+
+      
     </div>
   )
 }

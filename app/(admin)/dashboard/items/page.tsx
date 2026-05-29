@@ -5,22 +5,50 @@ import { DataTable } from "@/components/ui/data-table"
 import { menuItemsColumns } from "../items/columns"
 import { getMenuItemsTable } from "@/lib/data"
 import { SkeletonTable } from "@/components/layout/skeletons"
+import { Folder } from "lucide-react"
+
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
 
 export default async function Page() {
   const menuItemsData = await getMenuItemsTable()
   return (
     <div>
       <h1 className="text-2xl font-bold">Items</h1>
-      <div className="mt-6 flex gap-4">
-        <Button asChild size="lg">
-          <Link href="/dashboard/items/create"> Add Item</Link>
-        </Button>
-      </div>
-      <div className="container mx-auto py-10">
-        <Suspense fallback={<SkeletonTable />}>
-          <DataTable columns={menuItemsColumns} data={menuItemsData} />
-        </Suspense>
-      </div>
+      {menuItemsData.length === 0 ? (
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <Folder />
+            </EmptyMedia>
+            <EmptyTitle>No Menu Items Yet</EmptyTitle>
+            <EmptyDescription>
+              You haven&apos;t created any menu item yet. Get started by
+              creating your first item.
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button asChild size="lg" >
+              <Link href="/dashboard/items/create"> Add Item</Link>
+            </Button>
+          </EmptyContent>
+        </Empty>
+      ) : (
+        <div className="container mx-auto py-10">
+          <Button asChild size="lg" className="mb-2">
+            <Link href="/dashboard/items/create"> Add Item</Link>
+          </Button>
+          <Suspense fallback={<SkeletonTable />}>
+            <DataTable columns={menuItemsColumns} data={menuItemsData} />
+          </Suspense>
+        </div>
+      )}
     </div>
   )
 }
