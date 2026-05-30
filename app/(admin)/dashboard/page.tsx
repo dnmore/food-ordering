@@ -1,8 +1,14 @@
+import type { Metadata} from "next"
 import { Suspense } from "react"
 import DashboardCards from "@/components/cards/dashboard-cards"
 import { RevenueCard } from "@/components/cards/revenue-card"
 import { TopSellingCard } from "@/components/cards/top-selling-card"
 import { SkeletonCard } from "@/components/layout/skeletons"
+
+
+export const metadata: Metadata = {
+  title: 'Analytics',
+};
 
 export default function Page() {
   return (

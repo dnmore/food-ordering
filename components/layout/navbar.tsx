@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import AdminNavigation from "@/components/layout/admin-navigation"
 
-
 export default async function Navbar() {
   const isAuthenticated = await verifySession()
 
@@ -25,10 +24,7 @@ export default async function Navbar() {
         aria-label="Main navigation"
         className="flex items-center justify-between"
       >
-        <Button variant="link" size="lg" >
-           <Link href="/" className="font-mono font-medium text-xl">CraveWaves</Link>
-        </Button>
-       
+        <p className="font-mono text-xl font-medium">CraveWaves</p>
 
         <div className="flex items-center gap-2">
           {isAuthenticated?.user ? (
@@ -59,8 +55,7 @@ export default async function Navbar() {
                   <DropdownMenuItem>
                     <Link href="/menu/categories/Appetizers">Menu</Link>
                   </DropdownMenuItem>
-                 
-              
+
                   <AdminNavigation />
                   <DropdownMenuSeparator />
 

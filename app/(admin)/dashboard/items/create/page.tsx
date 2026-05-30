@@ -1,7 +1,12 @@
+import type { Metadata} from "next"
 import { Suspense } from "react"
 import CreateMenuItemForm from "@/components/forms/create-item"
 import { getCategoriesSelectOptions } from "@/lib/data"
 import { SkeletonForm } from "@/components/layout/skeletons"
+
+export const metadata: Metadata = {
+  title: 'Create Menu Item',
+};
 
 export default async function Page() {
   const categoriesData = await getCategoriesSelectOptions()

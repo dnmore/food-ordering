@@ -1,8 +1,13 @@
+import type { Metadata} from "next"
 import { Suspense } from "react"
 import { getOrderDetails } from "@/lib/data"
 import {OrderTable} from "@/components/table/order-table"
 import { notFound } from "next/navigation"
 import { SkeletonTable } from "@/components/layout/skeletons"
+
+export const metadata: Metadata = {
+  title: 'Order Details',
+};
 
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {

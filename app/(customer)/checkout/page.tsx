@@ -1,7 +1,12 @@
+import type { Metadata} from "next"
 import {redirect} from "next/navigation"
 import { verifySession } from "@/lib/dal"
 import CheckoutTable from "@/components/table/checkout-table"
 import { CheckoutForm } from "@/components/forms/checkout-form"
+
+export const metadata: Metadata = {
+  title: 'Checkout',
+};
 
 export default async function Page() {
   const session = await verifySession()

@@ -1,8 +1,13 @@
+import type { Metadata} from "next"
 import { Suspense } from "react"
 import prisma from "@/lib/db"
 import EditOrderStatusForm from "@/components/forms/edit-status"
 import { notFound } from "next/navigation"
 import { SkeletonForm } from "@/components/layout/skeletons"
+
+export const metadata: Metadata = {
+  title: 'Update Order Status',
+};
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const { id } = await props.params

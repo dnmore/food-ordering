@@ -1,3 +1,4 @@
+import type { Metadata} from "next"
 import { Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -15,6 +16,10 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
+
+export const metadata: Metadata = {
+  title: 'Categories',
+};
 
 export default async function Page() {
   const categoriesData = await getCategoriesTable()

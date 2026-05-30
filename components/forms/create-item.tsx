@@ -114,7 +114,7 @@ export default function CreateMenuItemForm({categoryOptions}: {categoryOptions: 
           </div>
           <CardFooter className="mt-6 flex justify-end gap-4">
             <Button asChild variant="outline">
-              <Link href="/dashboard/menu">Cancel</Link>
+              <Link href="/dashboard/items">Cancel</Link>
             </Button>
 
            <Button >

@@ -1,6 +1,10 @@
+import type { Metadata} from "next"
 import { getMenuItemsPerCategory } from "@/lib/data"
 import { MenuCard } from "@/components/cards/menu-card"
 
+export const metadata: Metadata = {
+  title: 'Menu',
+};
 export default async function Page(props: {
   params: Promise<{ category: string }>
 }) {

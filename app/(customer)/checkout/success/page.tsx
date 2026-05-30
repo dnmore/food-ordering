@@ -1,9 +1,14 @@
+import type { Metadata} from "next"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { verifySession } from "@/lib/dal"
 import { CheckCircle2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+
+export const metadata: Metadata = {
+  title: 'Success',
+};
 
 export default async function Page() {
     const session = await verifySession()

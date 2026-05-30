@@ -1,3 +1,4 @@
+import type { Metadata} from "next"
 import { Suspense } from "react"
 import { DataTable } from "@/components/ui/data-table"
 import { orderColumns } from "./columns"
@@ -13,6 +14,10 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty"
+
+export const metadata: Metadata = {
+  title: 'Orders',
+};
 
 export default async function Page() {
   const orderTableData = await getOrdersTable()

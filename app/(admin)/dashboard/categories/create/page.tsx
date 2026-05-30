@@ -1,6 +1,11 @@
+import type { Metadata} from "next"
 import { Suspense } from "react";
 import CreateMenuCategoryForm from "@/components/forms/create-category";
 import { SkeletonForm } from "@/components/layout/skeletons";
+
+export const metadata: Metadata = {
+  title: 'Create Category',
+};
 
 
 export default function Page(){

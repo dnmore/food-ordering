@@ -1,3 +1,4 @@
+import type { Metadata} from "next"
 import { Geist, Geist_Mono, Figtree } from "next/font/google"
 
 import "./globals.css"
@@ -12,6 +13,15 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Restaurant Ordering Platform | Cravewaves",
+    default: "Restaurant Ordering Platform | Cravewaves",
+  },
+  description: "SaaS-style ordering platform for restaurants to manage menus, orders, customers, and analytics from one powerful dashboard."
+}
 
 export default async function RootLayout({
   children,

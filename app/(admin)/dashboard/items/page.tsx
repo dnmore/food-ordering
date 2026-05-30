@@ -1,3 +1,4 @@
+import type { Metadata} from "next"
 import { Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -16,11 +17,15 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty"
 
+export const metadata: Metadata = {
+  title: 'Menu Items',
+};
+
 export default async function Page() {
   const menuItemsData = await getMenuItemsTable()
   return (
     <div>
-      <h1 className="text-2xl font-bold">Items</h1>
+      <h1 className="text-2xl font-bold">Menu Items</h1>
       {menuItemsData.length === 0 ? (
         <Empty>
           <EmptyHeader>
