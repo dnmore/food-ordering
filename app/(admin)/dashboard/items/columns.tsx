@@ -60,9 +60,12 @@ export const menuItemsColumns: ColumnDef<MenuItemTableRow>[] = [
 
       return (
         <div className="flex gap-2">
-           <Link href={`/dashboard/items/${item.id}/edit`}>
+          <Button asChild variant="link" size="lg">
+             <Link href={`/dashboard/items/${item.id}/edit`}>
             Edit
           </Link>
+          </Button>
+          
 
           <DeleteItemButton id={item.id} />
         </div>

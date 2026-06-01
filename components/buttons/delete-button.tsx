@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { Button} from "@/components/ui/button"
 
 export function DeleteCategoryButton({ id }: { id: string }) {
   const deleteCategoryWithId = deleteMenuCategory.bind(null, id)
@@ -17,9 +18,9 @@ export function DeleteCategoryButton({ id }: { id: string }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button type="button" aria-label="Delete Category">
-          <span>Delete </span>
-        </button>
+        <Button type="button" variant="destructive" aria-label="Delete Category">
+          Delete 
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -48,10 +49,10 @@ export function DeleteItemButton({ id }: { id: string }) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <button type="button" aria-label="Delete Item">
-          <span>Delete </span>
-        </button>
+      <AlertDialogTrigger asChild >
+        <Button type="button" variant="destructive" aria-label="Delete Item">
+          Delete
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

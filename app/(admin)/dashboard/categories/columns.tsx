@@ -29,9 +29,12 @@ export const categoriesColumns: ColumnDef<CategorySelectOption>[] = [
 
       return (
         <div className="flex gap-2">
-          <Link href={`/dashboard/categories/${category.id}/edit`}>
+          <Button asChild variant="link" size="lg">
+             <Link href={`/dashboard/categories/${category.id}/edit`}>
             Edit
           </Link>
+          </Button>
+         
           <DeleteCategoryButton id={category.id} />
         </div>
       )

@@ -74,10 +74,10 @@ export const orderColumns: ColumnDef<OrderTableRow>[] = [
       return (
         <div className="flex gap-2">
           <Button asChild variant="link" size="lg">
-          <Link href={`/dashboard/orders/${item.id}/details`}>view</Link>
+          <Link href={`/dashboard/orders/${item.id}/details`}>View</Link>
           </Button>
            <Button asChild variant="link" size="lg">
-          <Link href={`/dashboard/orders/${item.id}/edit`}>edit</Link>
+          <Link href={`/dashboard/orders/${item.id}/edit`}>Edit</Link>
           </Button>
         </div>
       )
