@@ -20,7 +20,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
   return (
     <div className="pt-6">
-      <h1 className="mb-2 ml-1 text-2xl font-bold">Order Details</h1>
+      <h1 className="mb-2 ml-1 text-xl font-semibold md:text-2xl">Order Details</h1>
       <div className="container max-w-3xl py-10">
         <Suspense fallback={<SkeletonTable/>}>
           <OrderTable order={orderDetails} />

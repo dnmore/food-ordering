@@ -25,7 +25,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
   return (
     <div className="pt-6">
-      <h1 className="mb-2 ml-1 text-2xl font-bold">Edit Menu Item</h1>
+      <h1 className="mb-2 ml-1 text-xl font-semibold md:text-2xl">Edit Menu Item</h1>
       <div className="container max-w-lg py-10">
         <Suspense fallback={<SkeletonForm/>}>
          <EditMenuItemForm categoryOptions={categoriesData} menuItem={{...itemToUpdate, price:itemToUpdate.price.toNumber() }} />

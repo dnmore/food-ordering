@@ -25,7 +25,7 @@ export default async function Page() {
   const menuItemsData = await getMenuItemsTable()
   return (
     <div>
-      <h1 className="text-2xl font-bold">Menu Items</h1>
+      <h1 className="text-xl font-semibold md:text-2xl">Menu Items</h1>
       {menuItemsData.length === 0 ? (
         <Empty>
           <EmptyHeader>

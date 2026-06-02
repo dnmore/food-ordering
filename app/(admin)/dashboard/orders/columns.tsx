@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { OrderTableRow } from "@/lib/definitions"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
+import { ArrowUpDown} from "lucide-react"
 
 export const orderColumns: ColumnDef<OrderTableRow>[] = [
   {
@@ -69,15 +69,19 @@ export const orderColumns: ColumnDef<OrderTableRow>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const item = row.original
+      const order = row.original
 
       return (
         <div className="flex gap-2">
-          <Button asChild variant="link" size="lg">
-          <Link href={`/dashboard/orders/${item.id}/details`}>View</Link>
+          <Button asChild>
+          <Link href={`/dashboard/orders/${order.id}/details`}>
+          View
+          </Link>
           </Button>
-           <Button asChild variant="link" size="lg">
-          <Link href={`/dashboard/orders/${item.id}/edit`}>Edit</Link>
+           <Button asChild variant="secondary">
+          <Link href={`/dashboard/orders/${order.id}/edit`}>
+            Edit
+          </Link>
           </Button>
         </div>
       )

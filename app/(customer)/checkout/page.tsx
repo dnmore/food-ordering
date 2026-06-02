@@ -17,7 +17,7 @@ export default async function Page() {
   return (
     <div className="container mx-auto px-4">
       <div className="flex-col items-center gap-4 px-2 py-10">
-        <h1 className="mb-6 text-3xl font-extrabold md:text-5xl">Checkout</h1>
+        <h1 className="mb-6 text-xl font-semibold md:text-2xl">Checkout</h1>
 
         <CheckoutTable />
         <CheckoutForm />

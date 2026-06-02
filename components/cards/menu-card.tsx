@@ -20,14 +20,14 @@ export function MenuCard({
 }: MenuItemTableRow) {
   const { addToCart } = useCartStore()
   return (
-    <Card size="sm" className="mx-auto w-full max-w-sm px-4">
+    <Card size="sm" className="mx-auto w-full max-w-sm">
       <CardHeader>
         <div className="flex items-center justify-between pb-4 border-b">
           <div>
-            <Badge variant="outline" className="mb-2">
+            <Badge variant={"outline"}  className="mb-2">
               {categoryTitle}
             </Badge>
-            <CardTitle className="text-lg font-semibold">
+            <CardTitle className="font-semibold">
               {name}
             </CardTitle>
           </div>
@@ -50,6 +50,7 @@ export function MenuCard({
       </CardContent>
       <CardFooter>
         <Button
+        variant="accent"
           size="sm"
           className="w-full"
           onClick={() => addToCart({ id, name, price, imageUrl, quantity: 1 })}

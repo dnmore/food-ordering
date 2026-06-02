@@ -1,6 +1,7 @@
 import { signIn, signOut } from "@/lib/auth"
 import { LoginButton } from "../buttons/login-button"
 import { LogOutIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export function SignIn({ provider }: { provider?: string }) {
   return (
@@ -23,9 +24,9 @@ export function SignOut() {
         await signOut()
       }}
     >
-      <button className="flex items-center gap-1">
+      <Button variant="ghost" className="flex items-center gap-1">
         <LogOutIcon /> Log out
-      </button>
+      </Button>
     </form>
   )
 }

@@ -26,7 +26,7 @@ export default async function Page() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Categories</h1>
+      <h1 className="text-xl font-semibold md:text-2xl">Categories</h1>
       {categoriesData.length === 0 ? (
         <Empty>
   <EmptyHeader>

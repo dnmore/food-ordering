@@ -23,7 +23,7 @@ export default async function Page() {
   const orderTableData = await getOrdersTable()
   return (
     <div>
-      <h1 className="text-2xl font-bold">Orders</h1>
+      <h1 className="text-xl font-semibold md:text-2xl">Orders</h1>
       {orderTableData.length === 0 ? (
   <Empty>
   <EmptyHeader>

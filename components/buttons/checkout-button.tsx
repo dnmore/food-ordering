@@ -11,8 +11,11 @@ export function CheckoutButton({ disabled }: Props) {
 
   return (
     <Button
+    variant="accent"
       type="submit"
+      size="lg"
       disabled={pending || disabled}
+      className="mt-4"
     >
       {pending ? "Processing..." : "Place Order"}
     </Button>

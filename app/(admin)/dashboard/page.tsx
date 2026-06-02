@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold">Analytics</h1>
+      <h1 className="text-xl font-semibold md:text-2xl">Analytics</h1>
       <Suspense fallback={<SkeletonCard />}>
         <DashboardCards />
       </Suspense>

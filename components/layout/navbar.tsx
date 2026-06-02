@@ -2,7 +2,7 @@ import { verifySession } from "@/lib/dal"
 import Link from "next/link"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 import Cart from "@/components/cart/cart"
-import { UserIcon } from "lucide-react"
+import { User } from "lucide-react"
 import { SignIn, SignOut } from "@/components/auth/auth-components"
 import {
   DropdownMenu,
@@ -24,7 +24,7 @@ export default async function Navbar() {
         aria-label="Main navigation"
         className="flex items-center justify-between"
       >
-        <p className="font-mono text-xl font-medium">CraveWaves</p>
+        <p className="text-xl font-medium">CraveWaves</p>
 
         <div className="flex items-center gap-2">
           {isAuthenticated?.user ? (
@@ -32,17 +32,17 @@ export default async function Navbar() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="icon"
                     aria-label="Open user menu"
                   >
-                    <Avatar className="h-8 w-8">
+                    <Avatar>
                       <AvatarImage
                         src={`${isAuthenticated.user?.image ?? ""}`}
                         alt={`${isAuthenticated.user?.name}'s profile picture`}
                       />
                       <AvatarFallback aria-hidden="true">
-                        <UserIcon />
+                        <User />
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -59,7 +59,7 @@ export default async function Navbar() {
                   <AdminNavigation />
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem variant="destructive">
+                  <DropdownMenuItem>
                     <SignOut />
                   </DropdownMenuItem>
                 </DropdownMenuContent>

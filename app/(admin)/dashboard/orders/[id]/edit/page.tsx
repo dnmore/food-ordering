@@ -26,7 +26,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
   return (
     <div className="pt-6">
-      <h1 className="mb-2 ml-1 text-xl md:text-2xl">
+      <h1 className="mb-2 ml-1 text-xl font-semibold md:text-2xl">
         Update Order Status 
       </h1>
       <p className="text-sm md:text-xl  text-muted-foreground"> #{itemToUpdate.id}</p>

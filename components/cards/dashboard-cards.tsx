@@ -24,21 +24,21 @@ export default async function DashboardCards() {
         title="Total Revenue"
         value={totalRevenue}
         type="revenue"
-        className="bg-emerald-100 text-emerald-600 rounded-full p-3 w-sm"
+        className="bg-emerald-100 text-emerald-600 p-3 w-sm"
       />
 
       <DashboardCard
         title="Total Orders"
         value={totalOrders}
         type="orders"
-        className="bg-blue-100 text-blue-600 rounded-full p-3 w-sm"
+        className="bg-blue-100 text-blue-600 p-3 w-sm"
       />
 
       <DashboardCard
-        value={averageOrderValue}
+        value={averageOrderValue.toFixed(2)}
         title="Average Order Value"
         type="aov"
-        className="bg-orange-100 text-orange-600 rounded-full p-3 w-sm"
+        className="bg-orange-100 text-orange-600 p-3 w-sm"
       />
     </div>
   )

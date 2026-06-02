@@ -18,12 +18,12 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto flex min-h-[70vh] max-w-2xl items-center justify-center px-4 py-16">
-      <div className="w-full rounded-2xl border bg-card p-8 text-center shadow-sm">
+      <div className="w-full border bg-card p-8 text-center shadow-sm">
         <div className="mb-6 flex justify-center">
-          <CheckCircle2 className="h-20 w-20 text-primary" />
+          <CheckCircle2 className="h-15 w-15" strokeWidth={1.5} />
         </div>
 
-        <h1 className="mb-3 text-3xl font-bold tracking-tight">
+        <h1 className="mb-3 text-xl md:text-2xl font-semibold tracking-tight">
           Order Placed Successfully
         </h1>
 
