@@ -29,9 +29,9 @@ export const categoriesColumns: ColumnDef<CategorySelectOption>[] = [
 
       return (
         <div className="flex gap-2">
-          <Button asChild variant="link" size="lg">
+          <Button asChild variant="secondary">
              <Link href={`/dashboard/categories/${category.id}/edit`}>
-            Edit
+             Edit
           </Link>
           </Button>
          

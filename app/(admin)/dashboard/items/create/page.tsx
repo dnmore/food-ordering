@@ -13,7 +13,7 @@ export default async function Page() {
 
   return (
     <div className="pt-6">
-      <h1 className="mb-2 ml-1 text-2xl font-bold">Create Menu Item</h1>
+      <h1 className="mb-2 ml-1 text-xl font-semibold md:text-2xl">Create Menu Item</h1>
       <div className="container max-w-lg py-10">
         <Suspense fallback={<SkeletonForm />}>
           <CreateMenuItemForm categoryOptions={categoriesData} />

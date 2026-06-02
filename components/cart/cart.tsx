@@ -58,7 +58,7 @@ export default function Cart({ session }: CartProps) {
 
       <DropdownMenuContent
         align="end"
-        className="w-[95vw] max-w-md rounded-2xl p-0"
+        className="w-[95vw] max-w-md p-0"
       >
         <div className="flex items-center justify-between border-b p-4">
           <div>
@@ -72,7 +72,7 @@ export default function Cart({ session }: CartProps) {
         <div aria-label="Cart items">
           {cartItems.length === 0 ? (
             <div className="flex flex-col items-center justify-center gap-2 p-8 text-center">
-              <ShoppingCart className="h-5 w-5" />
+              <ShoppingCart aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
               <p className="font-medium">Your cart is empty</p>
               <p className="text-sm text-muted-foreground">
                 Add delicious food to get started.

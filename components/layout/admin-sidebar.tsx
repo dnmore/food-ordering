@@ -41,7 +41,7 @@ export function AdminSidebar() {
     >
      
         <nav
-          className="flex flex-1 flex-col gap-1 p-2"
+          className="flex flex-1 flex-col gap-2 p-2"
           aria-label="Dashboard navigation"
         >
           {links.map(({ name, href, icon: Icon }) => (
@@ -53,11 +53,11 @@ export function AdminSidebar() {
               className={clsx(
                 "group flex h-10 items-center justify-center gap-3 rounded-md bg-background text-sm text-foreground transition-colors hover:bg-muted md:justify-start md:px-3",
                 {
-                  "bg-muted font-bold": pathname === href,
+                  "bg-muted font-semibold": pathname === href,
                 }
               )}
             >
-              <Icon aria-hidden="true" className="h-5 w-5"/>
+              <Icon aria-hidden="true" className="h-5 w-5" strokeWidth={1.5}/>
 
               <span className="hidden md:inline">{name}</span>
             </Link>

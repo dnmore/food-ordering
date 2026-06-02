@@ -10,8 +10,7 @@ export function LoginButton() {
   return (
     <Button
       type="submit"
-      size="lg"
-      disabled={pending}
+       disabled={pending}
       className="flex items-center gap-2"
     >
       Login
