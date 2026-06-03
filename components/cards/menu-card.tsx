@@ -4,12 +4,14 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardContent,
+  CardDescription,
+  CardAction,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { MenuItemTableRow } from "@/lib/definitions"
+import { MenuItemCard } from "@/lib/definitions"
+import Image from "next/image"
 
 export function MenuCard({
   id,
@@ -17,47 +19,48 @@ export function MenuCard({
   price,
   imageUrl,
   categoryTitle,
-}: MenuItemTableRow) {
+}: MenuItemCard) {
   const { addToCart } = useCartStore()
   return (
-    <Card size="sm" className="mx-auto w-full max-w-sm">
-      <CardHeader>
-        <div className="flex items-center justify-between pb-4 border-b">
-          <div>
-            <Badge variant={"outline"}  className="mb-2">
-              {categoryTitle}
-            </Badge>
-            <CardTitle className="font-semibold">
-              {name}
-            </CardTitle>
-          </div>
-          <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full">
-            <img
-              src={imageUrl}
-              alt={name}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        <p className="text-base font-semibold">
-          {price.toLocaleString("it-IT", {
-            style: "currency",
-            currency: "EUR",
-          })}
-        </p>
-      </CardContent>
-      <CardFooter>
-        <Button
-        variant="accent"
-          size="sm"
-          className="w-full"
-          onClick={() => addToCart({ id, name, price, imageUrl, quantity: 1 })}
-        >
-          Add to Cart
-        </Button>
-      </CardFooter>
+    <Card className="relative mx-auto w-full max-w-sm pt-0">
+      <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
+
+      <Image
+        src={imageUrl}
+        alt={name}
+        className="relative z-20 aspect-video w-full object-cover"
+        width={200}
+        height={200}
+        priority={false}
+      />
+      
+        <CardHeader>
+          <CardAction>
+            <Badge variant="secondary">{categoryTitle}</Badge>
+          </CardAction>
+          <CardTitle>{name}</CardTitle>
+          <CardDescription>
+            <p className="text-base font-semibold">
+              {price.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "EUR",
+              })}
+            </p>
+          </CardDescription>
+        </CardHeader>
+        <CardFooter className="mt-auto">
+          <Button
+            variant="accent"
+            size="sm"
+            className="w-full"
+            onClick={() =>
+              addToCart({ id, name, price, imageUrl, quantity: 1 })
+            }
+          >
+            Add to Cart
+          </Button>
+        </CardFooter>
+      
     </Card>
   )
 }

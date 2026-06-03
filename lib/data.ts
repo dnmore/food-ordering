@@ -41,7 +41,6 @@ export const getMenuItemsTable = unstable_cache(
       select: {
         id: true,
         name: true,
-        imageUrl: true,
         price: true,
 
         category: {
@@ -56,7 +55,6 @@ export const getMenuItemsTable = unstable_cache(
     return menuData.map((item) => ({
       id: item.id,
       name: item.name,
-      imageUrl: item.imageUrl,
       price: Number(item.price),
       categoryTitle: item.category.title,
     }))

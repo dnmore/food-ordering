@@ -7,7 +7,6 @@ import { DeleteItemButton } from "@/components/buttons/delete-button"
 import { ColumnDef } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 
-
 export const menuItemsColumns: ColumnDef<MenuItemTableRow>[] = [
   {
     accessorKey: "name",
@@ -23,13 +22,10 @@ export const menuItemsColumns: ColumnDef<MenuItemTableRow>[] = [
       )
     },
   },
-  {
-    accessorKey: "imageUrl",
-    header: "Image",
-  },
+
   {
     accessorKey: "price",
-     header: ({ column }) => {
+    header: ({ column }) => {
       return (
         <Button
           variant="ghost"
@@ -46,7 +42,7 @@ export const menuItemsColumns: ColumnDef<MenuItemTableRow>[] = [
         style: "currency",
         currency: "EUR",
       }).format(amount)
-      return <div className="font-medium px-3">{formatted}</div>
+      return <div className="px-3 font-medium">{formatted}</div>
     },
   },
   {
@@ -61,11 +57,8 @@ export const menuItemsColumns: ColumnDef<MenuItemTableRow>[] = [
       return (
         <div className="flex gap-2">
           <Button asChild variant="secondary">
-             <Link href={`/dashboard/items/${item.id}/edit`}>
-            Edit
-          </Link>
+            <Link href={`/dashboard/items/${item.id}/edit`}>Edit</Link>
           </Button>
-          
 
           <DeleteItemButton id={item.id} />
         </div>

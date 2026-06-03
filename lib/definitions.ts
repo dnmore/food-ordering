@@ -62,11 +62,15 @@ export type OrderDetails = {
 }
 export type CategorySelectOption = Omit<MenuCategory, "createdAt">
 
-export type MenuItemTableRow = Omit<MenuItem, "categoryId" | "createdAt"> & {
+export type MenuItemTableRow = Omit<MenuItem, "categoryId" | "createdAt" | "imageUrl"> & {
   categoryTitle: string
 }
 
 export type OrderTableRow = Omit<Order, "userId" | "completedAt" | "items" | "createdAt">
+
+export type MenuItemCard = Omit<MenuItem, "categoryId" | "createdAt"> & {
+  categoryTitle: string
+}
 export type CartItem = Omit<MenuItem, "categoryId" | "createdAt"> & {
   quantity: number
 }
