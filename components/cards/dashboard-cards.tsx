@@ -16,13 +16,23 @@ export default async function DashboardCards() {
     averageOrderValue,
   } = await getDashboardStats()
 
+  const formattedRevenue = new Intl.NumberFormat("it-IT", {
+        style: "currency",
+        currency: "EUR",
+      }).format(totalRevenue)
+
+      const formattedAverageOrderValue = new Intl.NumberFormat("it-IT", {
+        style: "currency",
+        currency: "EUR",
+      }).format(averageOrderValue)
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       
 
       <DashboardCard
         title="Total Revenue"
-        value={totalRevenue}
+        value={formattedRevenue}
         type="revenue"
         className="bg-emerald-100 text-emerald-600 p-3 w-sm"
       />
@@ -35,7 +45,7 @@ export default async function DashboardCards() {
       />
 
       <DashboardCard
-        value={averageOrderValue.toFixed(2)}
+        value={formattedAverageOrderValue}
         title="Average Order Value"
         type="aov"
         className="bg-orange-100 text-orange-600 p-3 w-sm"

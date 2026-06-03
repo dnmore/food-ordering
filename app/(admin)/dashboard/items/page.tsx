@@ -39,14 +39,14 @@ export default async function Page() {
             </EmptyDescription>
           </EmptyHeader>
           <EmptyContent>
-            <Button asChild size="lg" >
+            <Button asChild >
               <Link href="/dashboard/items/create"> Add Item</Link>
             </Button>
           </EmptyContent>
         </Empty>
       ) : (
         <div className="container mx-auto py-10">
-          <Button asChild size="lg" className="mb-2">
+          <Button asChild className="mb-2">
             <Link href="/dashboard/items/create"> Add Item</Link>
           </Button>
           <Suspense fallback={<SkeletonTable />}>

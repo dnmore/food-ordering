@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Page(){
 return(
-     <div className="pt-6">
+     <div>
       <h1 className="mb-2 text-xl font-semibold md:text-2xl ml-1">Create Category</h1>
       <div className="container py-10 max-w-lg">
         <Suspense fallback={<SkeletonForm/>}>

@@ -37,7 +37,7 @@ export default async function Page() {
     <EmptyDescription>You haven&apos;t created any categories yet. Get started by creating your first category.</EmptyDescription>
   </EmptyHeader>
   <EmptyContent>
-     <Button asChild size="lg">
+     <Button>
           <Link href="/dashboard/categories/create"> Add Category</Link>
         </Button>
   </EmptyContent>
@@ -45,7 +45,7 @@ export default async function Page() {
       ):(
         <div className="container mx-auto py-10">
         
-        <Button asChild size="lg" className="mb-2">
+        <Button asChild className="mb-2">
           <Link href="/dashboard/categories/create"> Add Category</Link>
         </Button>
         <Suspense fallback={<SkeletonTable />}>

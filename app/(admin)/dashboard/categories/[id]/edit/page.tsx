@@ -21,7 +21,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   }
 
   return (
-    <div className="pt-6">
+    <div>
       <h1 className="mb-2 ml-1 text-xl font-semibold md:text-2xl">Edit Category</h1>
       <div className="container max-w-lg py-10">
         <Suspense fallback={<SkeletonForm />}>

@@ -46,10 +46,10 @@ export default function CreateMenuCategoryForm() {
             )}
           </div>
           <CardFooter className="mt-6 flex justify-end gap-4">
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="outline">
               <Link href="/dashboard/categories">Cancel</Link>
             </Button>
-            <Button size="lg"> Save</Button>
+            <Button> Save</Button>
           </CardFooter>
         </form>
       </CardContent>
