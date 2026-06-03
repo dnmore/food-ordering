@@ -3,6 +3,7 @@ import { unstable_cache } from "next/cache"
 import {
   CategorySelectOption,
   MenuItemTableRow,
+  MenuItemCard,
   OrderTableRow,
   OrderDetails,
 } from "./definitions"
@@ -65,7 +66,7 @@ export const getMenuItemsTable = unstable_cache(
 )
 
 export const getMenuItemsPerCategory = unstable_cache(
-  async (category: string): Promise<MenuItemTableRow[]> => {
+  async (category: string): Promise<MenuItemCard[]> => {
     const menuData = await prisma.menuItem.findMany({
       where: {
         category: {
