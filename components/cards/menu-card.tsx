@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import {
   Card,
   CardDescription,
-  CardAction,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -33,34 +32,30 @@ export function MenuCard({
         height={200}
         priority={false}
       />
-      
-        <CardHeader>
-          <CardAction>
-            <Badge variant="secondary">{categoryTitle}</Badge>
-          </CardAction>
-          <CardTitle>{name}</CardTitle>
-          <CardDescription>
-            <p className="text-base font-semibold">
-              {price.toLocaleString("it-IT", {
-                style: "currency",
-                currency: "EUR",
-              })}
-            </p>
-          </CardDescription>
-        </CardHeader>
-        <CardFooter className="mt-auto">
-          <Button
-            variant="accent"
-            size="sm"
-            className="w-full"
-            onClick={() =>
-              addToCart({ id, name, price, imageUrl, quantity: 1 })
-            }
-          >
-            Add to Cart
-          </Button>
-        </CardFooter>
-      
+
+      <CardHeader>
+        <Badge variant="secondary">{categoryTitle}</Badge>
+
+        <CardTitle>{name}</CardTitle>
+        <CardDescription>
+          <p className="text-base font-semibold">
+            {price.toLocaleString("it-IT", {
+              style: "currency",
+              currency: "EUR",
+            })}
+          </p>
+        </CardDescription>
+      </CardHeader>
+      <CardFooter className="mt-auto">
+        <Button
+          variant="accent"
+          size="sm"
+          className="w-full"
+          onClick={() => addToCart({ id, name, price, imageUrl, quantity: 1 })}
+        >
+          Add to Cart
+        </Button>
+      </CardFooter>
     </Card>
   )
 }
