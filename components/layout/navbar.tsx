@@ -53,7 +53,7 @@ export default async function Navbar() {
                   className="w-40 p-2"
                 >
                   <DropdownMenuItem>
-                    <Link href="/menu/categories/Appetizers">Menu</Link>
+                    <Link href="/menu">Menu</Link>
                   </DropdownMenuItem>
 
                   <AdminNavigation />

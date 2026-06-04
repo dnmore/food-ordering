@@ -6,7 +6,7 @@ import {
   MenuItemCard,
   OrderTableRow,
   OrderDetails,
-} from "./definitions"
+} from  "@/lib/definitions"
 
 export const getCategoriesSelectOptions = unstable_cache(
   async (): Promise<CategorySelectOption[]> => {

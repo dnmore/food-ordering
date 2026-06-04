@@ -169,7 +169,9 @@ export async function updateMenuCategory(
     },
   })
   revalidateTag("menuCategories", "max")
+  revalidateTag("menuItems", "max")
   revalidateTag("dashboard", "max")
+  revalidatePath("/dashboard/items")
   revalidatePath("/dashboard/categories")
   redirect("/dashboard/categories")
 }

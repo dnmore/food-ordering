@@ -14,7 +14,7 @@ export default function Page() {
           irresistible desserts, satisfy every craving today!
         </p>
         <Button variant="accent" asChild size="lg" className="mt-2 px-6">
-          <Link href="/menu/categories/Appetizers">Explore Our Menu</Link>
+          <Link href="/menu">Explore Our Menu</Link>
         </Button>
       </div>
     </div>

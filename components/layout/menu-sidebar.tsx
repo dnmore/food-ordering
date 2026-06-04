@@ -4,71 +4,42 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { clsx } from "clsx"
 
-import {
-  Popcorn,
-  Hamburger,
-  Salad,
-  IceCreamBowl,
-  Flame,
-  
-} from "lucide-react"
+import { CategorySelectOption } from "@/lib/definitions"
 
-const links = [
-  {
-    category: "Appetizers",
-    href: "/menu/categories/Appetizers",
-    icon: Popcorn,
-  },
-  {
-    category: "Burgers",
-    href: "/menu/categories/Burgers",
-    icon: Hamburger,
-  },
-  {
-    category: "Sides",
-    href: "/menu/categories/Sides",
-    icon: Salad,
-  },
-  {
-    category: "Desserts",
-    href: "/menu/categories/Desserts",
-    icon: IceCreamBowl,
-  },
-  {
-    category: "Tex-Mex",
-    href: "/menu/categories/Tex-Mex",
-    icon: Flame,
-  },
-]
 
-export function MenuSidebar() {
+type MenuSidebarProps = {
+  categories: CategorySelectOption[]
+}
+
+export function MenuSidebar({ categories }: MenuSidebarProps) {
   const pathname = usePathname()
 
   return (
     <aside
-      className="flex h-auto w-16 flex-col border-r bg-background md:w-64"
+      className="flex h-auto w-32 flex-col border-r bg-background md:w-64"
       aria-label="Sidebar"
     >
       <nav
         className="flex flex-1 flex-col gap-2 p-2"
         aria-label="Menu navigation"
-      >
-        {links.map(({ category, href, icon: Icon }) => (
+      > <Link href="/menu" className="flex h-10 uppercase items-center rounded-md bg-background text-sm text-foreground transition-colors hover:bg-muted mb-4 md:px-3">Menu</Link>
+      <p className="text-muted-foreground text-xs uppercase">Categories</p>
+        {categories.map((category) => (
           <Link
-            key={href}
-            href={href}
-            aria-label={category}
-            aria-current={pathname === href ? "page" : undefined}
+            key={category.id}
+            href={`/menu/categories/${category.title}`}
+            aria-label={category.title}
+            aria-current={pathname === `/menu/categories/${category.title}` ? "page" : undefined}
             className={clsx(
               "group flex h-10 items-center justify-center gap-3 rounded-md bg-background text-sm text-foreground transition-colors hover:bg-muted md:justify-start md:px-3",
               {
-                "bg-muted font-semibold": pathname === href,
+                "bg-muted font-semibold": pathname === `/menu/categories/${category.title}`,
               }
             )}
           >
-            <Icon aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
+          
 
-            <span className="hidden md:inline">{category}</span>
+            {category.title}
           </Link>
         ))}
       </nav>
