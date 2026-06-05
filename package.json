@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@faker-js/faker": "^10.4.0",
     "@tailwindcss/postcss": "^4.2.1",
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
@@ -50,5 +51,6 @@
     "tailwindcss": "^4.2.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
-  }
+  },
+  "prisma": { "seed": "tsx prisma/seed.ts" }
 }
