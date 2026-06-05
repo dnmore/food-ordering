@@ -1,5 +1,10 @@
+import type { Metadata} from "next"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
+
+export const metadata: Metadata = {
+  title: 'Menu',
+};
 
 export default function Page() {
   return (
