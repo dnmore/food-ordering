@@ -13,6 +13,8 @@ type MenuSidebarProps = {
 
 export function MenuSidebar({ categories }: MenuSidebarProps) {
   const pathname = usePathname()
+  
+  
 
   return (
     <aside
