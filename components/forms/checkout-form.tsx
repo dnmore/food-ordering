@@ -1,31 +1,25 @@
 "use client"
 
-import { useActionState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useActionState} from "react"
 import { useCartStore } from "@/app/store/useCartStore"
 
-import { createOrder, CreateOrderState } from "@/lib/customer/order.actions"
+import { CreateOrderState, createCheckoutSession } from "@/lib/customer/order.actions"
 import { CheckoutButton } from "@/components/buttons/checkout-button"
 
 export function CheckoutForm() {
-  const { cartItems, clearCart } = useCartStore()
-  const router = useRouter()
+  const { cartItems } = useCartStore()
+  
   const initialState: CreateOrderState = {
     success: false,
     message: null,
     errors: {},
   }
-  const [state, formAction] = useActionState(createOrder, initialState)
+  const [state, formAction] = useActionState(createCheckoutSession, initialState)
 
-  useEffect(() => {
-    if (state.success) {
-      router.push("/checkout/success")
-      clearCart()
-    }
-  }, [state.success, clearCart, router])
-
-  return (
-    <form action={formAction}>
+    return (
+    <form action={formAction}  onSubmit={() => {
+    console.log("FORM SUBMITTED")
+  }}>
       {cartItems.map((item) => (
         <input
           key={item.id}
@@ -42,6 +36,10 @@ export function CheckoutForm() {
       {state.errors?.items?.map((error) => (
         <p key={error}>{error}</p>
       ))}
+
+      {state.message && (
+  <p className="text-xs text-red-600">{state.message}</p>
+)}
     </form>
   )
 }

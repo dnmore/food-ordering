@@ -16,7 +16,7 @@ export type MenuItem = {
 export type Order = {
   id: string
   userId: string
-  status: "PENDING" | "PREPARING" | "COMPLETED"
+  status: "PENDING" | "PREPARING" | "COMPLETED" | "PAID" | "CANCELLED"
   totalAmount: number
   completedAt: Date | null
   items: OrderItem[]
@@ -27,7 +27,7 @@ export type OrderDetails = {
   id: string
   userId: string
 
-  status: "PENDING" | "PREPARING" | "COMPLETED"
+  status: "PENDING" | "PREPARING" | "COMPLETED" | "PAID" | "CANCELLED"
 
   totalAmount: number
 

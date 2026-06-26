@@ -1,11 +1,13 @@
 "use server"
 
 import prisma from "@/lib/db"
+import { stripe } from "@/lib/stripe"
 import { Prisma, OrderStatus } from "@prisma/client"
 import { auth } from "@/lib/auth"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
+
 
 const OrderItemSchema = z.object({
   menuItemId: z.string(),
@@ -24,21 +26,54 @@ export type CreateOrderState = {
   message?: string | null
 }
 
-export async function createOrder(
-  prevState: CreateOrderState,
+export async function createCheckoutSession(
+  prevState: CreateOrderState | undefined,
   formData: FormData
 ): Promise<CreateOrderState> {
+  let checkoutUrl: string
+
+  // Authenticate User
   const session = await auth()
 
   if (!session?.user?.id) {
     redirect("/")
   }
 
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+  })
+
+  if (!user) {
+    redirect("/")
+  }
+
+  let customerId = user.stripeCustomerId
+
+  if (!user.email) {
+    return {
+      success: false,
+      message: "User email is required.",
+    }
+  }
+
+  if (!customerId) {
+    const customer = await stripe.customers.create({
+      email: user.email,
+    })
+
+    customerId = customer.id
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { stripeCustomerId: customerId },
+    })
+  }
+
+  // Validate Cart
+
   const rawItems = formData.getAll("items")
 
-  const parsedItems = rawItems.map((item) =>
-    JSON.parse(item as string)
-  )
+  const parsedItems = rawItems.map((item) => JSON.parse(item as string))
 
   const validatedFields = CreateOrderSchema.safeParse({
     items: parsedItems,
@@ -58,6 +93,8 @@ export async function createOrder(
 
   const { items } = validatedFields.data
 
+  // Load Menu Prices From DB
+
   const menuItems = await prisma.menuItem.findMany({
     where: {
       id: {
@@ -72,11 +109,10 @@ export async function createOrder(
       message: "Some menu items no longer exist.",
     }
   }
+  // Build Order Items
 
   const orderItems = items.map((cartItem) => {
-    const menuItem = menuItems.find(
-      (item) => item.id === cartItem.menuItemId
-    )
+    const menuItem = menuItems.find((item) => item.id === cartItem.menuItemId)
 
     if (!menuItem) {
       throw new Error("Menu item not found")
@@ -92,26 +128,89 @@ export async function createOrder(
     }
   })
 
+  // Calculate Total Amount
+
   const totalAmount = orderItems.reduce(
     (acc, item) => acc.add(item.totalPrice),
     new Prisma.Decimal(0)
   )
+  try {
+    // Create Pending Order
+    const order = await prisma.order.create({
+      data: {
+        userId: session.user.id,
 
-  await prisma.order.create({
-    data: {
-      userId: session.user.id,
-      status: OrderStatus.PENDING,
-      totalAmount,
-      items: {
-        create: orderItems,
+        status: OrderStatus.PENDING,
+
+        totalAmount,
+
+        items: {
+          create: orderItems,
+        },
       },
-    },
-  })
+    })
 
-  revalidatePath("/dashboard/orders")
+    // Build Stripe Line Items
+    const lineItems = orderItems.map((item) => {
+      const menuItem = menuItems.find((m) => m.id === item.menuItemId)!
 
-  return {
-    success: true,
-    message: "Order created successfully.",
+      return {
+        price_data: {
+          currency: "eur",
+
+          product_data: {
+            name: menuItem.name,
+          },
+
+          unit_amount: Math.round(Number(item.unitPrice) * 100),
+        },
+
+        quantity: item.quantity,
+      }
+    })
+
+    // Create Checkout Session
+
+    const stripeSession = await stripe.checkout.sessions.create({
+      customer: customerId,
+      mode: "payment",
+
+      line_items: lineItems,
+
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/cancel?session_id={CHECKOUT_SESSION_ID}`,
+
+      metadata: {
+        orderId: order.id,
+        userId: session.user.id,
+      },
+    })
+
+    if (!stripeSession.url) {
+      return {
+        success: false,
+        message: "Failed to create checkout session URL.",
+      }
+    }
+
+    checkoutUrl = stripeSession.url
+
+    // Save Stripe Session
+    await prisma.order.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        stripeSessionId: stripeSession.id,
+      },
+    })
+    revalidatePath("/dashboard/orders")
+  } catch (error) {
+    return {
+      success: false,
+      message: "Failed to create checkout session",
+    }
   }
+  redirect(checkoutUrl)
 }

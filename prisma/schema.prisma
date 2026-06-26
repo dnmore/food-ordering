@@ -24,8 +24,11 @@ enum Role {
 
 enum OrderStatus {
   PENDING
+  PAID
   PREPARING
   COMPLETED
+  CANCELLED
+
 }
 
 /// =======================
@@ -71,8 +74,6 @@ model User {
   image         String?
   role           Role     @default(CUSTOMER)
   stripeCustomerId String? @unique
-  stripeSubscriptionId String?
-  subscriptionStatus String?
   accounts      Account[]
   sessions      Session[]
   orders        Order[]
@@ -126,6 +127,9 @@ model Order {
   totalAmount     Decimal       @map("total_amount") @db.Decimal(10, 2)
 
   completedAt     DateTime?     @map("completed_at")
+
+  stripeSessionId String?       @unique
+  stripePaymentIntentId String?
 
   items           OrderItem[]
 
