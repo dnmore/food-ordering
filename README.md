@@ -5,7 +5,7 @@ A SaaS-style food ordering platform that enables restaurants to manage their own
 ![License](https://img.shields.io/badge/MIT-license-blue.svg)
 ![Next.js](https://img.shields.io/badge/Next.js-Framework-black)
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748)
-![Stripe](https://img.shields.io/badge/Stripe-Test_Mode-635BFF)
+![Stripe](https://img.shields.io/badge/Stripe-Payment-635BFF)
 ![Vercel](https://img.shields.io/badge/Vercel-Deployment-black)
 
 ---
@@ -45,7 +45,7 @@ A SaaS-style food ordering platform that enables restaurants to manage their own
 - View menu categories
 - Shopping cart with persistent state
 - Checkout flow
-- Stripe payment integration (Test Mode)
+- Stripe payment integration 
 - Order success and cancellation pages
 - Fully responsive UI
 - Light/Dark mode support
@@ -132,7 +132,7 @@ Business insights including:
 | ORM | Prisma |
 | Database | Neon |
 | Authentication | NextAuth (Google OAuth) |
-| Payments | Stripe (Test Mode) |
+| Payments | Stripe |
 | UI Components | Shadcn/UI |
 | State Management | Zustand |
 | Validation | Zod |
@@ -172,7 +172,7 @@ Admin Dashboard
 - **Next.js** handles routing and rendering.
 - **Prisma** provides database access.
 - **Neon** stores application data.
-- **Stripe** processes payments in Test Mode.
+- **Stripe** processes payments.
 - **NextAuth** handles Google authentication.
 - **Zustand** manages persistent cart state.
 - **Recharts** powers dashboard analytics.
