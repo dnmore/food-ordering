@@ -18,7 +18,7 @@ export default async function AdminNavigation() {
 
   return (
     <>
-     <DropdownMenuSeparator />
+
      <DropdownMenuGroup>
 
       <DropdownMenuLabel>Admin Panel</DropdownMenuLabel>
