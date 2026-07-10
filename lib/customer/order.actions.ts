@@ -7,6 +7,7 @@ import { auth } from "@/lib/auth"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
+import { DEMO_MODE } from "@/lib/config"
 
 
 const OrderItemSchema = z.object({
@@ -35,7 +36,7 @@ export async function createCheckoutSession(
   // Authenticate User
   const session = await auth()
 
-  if (!session?.user?.id) {
+  if (!session?.user?.id || DEMO_MODE) {
     redirect("/")
   }
 

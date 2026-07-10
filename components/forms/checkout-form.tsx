@@ -5,6 +5,7 @@ import { useCartStore } from "@/app/store/useCartStore"
 
 import { CreateOrderState, createCheckoutSession } from "@/lib/customer/order.actions"
 import { CheckoutButton } from "@/components/buttons/checkout-button"
+import { DEMO_MODE } from "@/lib/config"
 
 export function CheckoutForm() {
   const { cartItems } = useCartStore()
@@ -18,7 +19,7 @@ export function CheckoutForm() {
 
     return (
     <form action={formAction}  onSubmit={() => {
-    console.log("FORM SUBMITTED")
+   
   }}>
       {cartItems.map((item) => (
         <input
@@ -32,7 +33,7 @@ export function CheckoutForm() {
         />
       ))}
 
-      <CheckoutButton disabled={cartItems.length === 0} />
+      <CheckoutButton disabled={cartItems.length === 0 || DEMO_MODE} />
       {state.errors?.items?.map((error) => (
         <p key={error}>{error}</p>
       ))}
