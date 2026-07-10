@@ -3,7 +3,7 @@
 import { useFormStatus } from "react-dom"
 import { Button } from "@/components/ui/button"
 import { DEMO_MODE } from "@/lib/config"
-import { LoaderCircle } from "lucide-react"
+import { Spinner } from "@/components/ui/spinner"
 
 export function LoginButton() {
   const { pending } = useFormStatus()
@@ -16,7 +16,7 @@ export function LoginButton() {
     >
       {pending ?
       
-      <LoaderCircle className="animate-spin" /> : "Login"}
+      <Spinner/> : "Login"}
     </Button>
   )
 }
@@ -32,7 +32,7 @@ export function DemoLoginButton({ text }: { text: string }) {
     >
       {pending ? (
         <>
-          <LoaderCircle className="animate-spin" /> Logging in...
+          <Spinner data-icon="inline-start" /> Logging in...
         </>
       ) : (
         text

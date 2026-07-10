@@ -21,12 +21,12 @@ export default async function Page() {
           From juicy burgers to Tex-Mex delights, nachos, nuggets, and
           irresistible desserts, satisfy every craving today!
         </p>
-        <Button variant="accent" asChild size="lg" className="mt-2 px-6">
+        <Button variant="link" asChild size="lg" className="mt-2 px-6">
           <Link href="/menu">Explore Our Menu</Link>
         </Button>
         {DEMO_MODE && !isAuthenticated && (
           <>
-            <div className="w-full bg-muted-foreground/20 p-2 text-center capitalized">
+            <div className="w-full bg-muted-foreground/20 p-2 text-center capitalize">
               <p>Demo Mode: OAuth disabled. Use demo accounts to explore.</p>
             </div>
             <div className="flex flex-col items-center justify-center gap-4 pt-6 md:flex-row">

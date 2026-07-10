@@ -18,8 +18,11 @@ export default async function AdminNavigation() {
     <>
       <DropdownMenuGroup>
         <DropdownMenuLabel>
-          Admin Panel {DEMO_MODE && <p>(DEMO MODE - View Only)</p>}
+          Admin Panel {DEMO_MODE && <p>(DEMO MODE - Read Only)</p>}
         </DropdownMenuLabel>
+        <DropdownMenuItem>
+          <Link href="/">Home</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/dashboard">Analytics</Link>
         </DropdownMenuItem>

@@ -19,8 +19,11 @@ export default async function CustomerNavigation() {
     <>
       <DropdownMenuGroup>
         <DropdownMenuLabel>
-          Customer Panel {DEMO_MODE && <p>(DEMO MODE - View Only)</p>}
+          Customer Panel {DEMO_MODE && <p>(DEMO MODE - Read Only)</p>}
         </DropdownMenuLabel>
+         <DropdownMenuItem>
+          <Link href="/">Home</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/menu">Menu</Link>
         </DropdownMenuItem>
