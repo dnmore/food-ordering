@@ -1,7 +1,9 @@
 import { signIn, signOut } from "@/lib/auth"
-import { LoginButton } from "../buttons/login-button"
+import { LoginButton, DemoLoginButton } from "../buttons/login-button"
 import { LogOutIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { demoAdminLogin, demoCustomerLogin } from "@/lib/demo-login"
+import { redirect } from "next/navigation";
 
 export function SignIn({ provider }: { provider?: string }) {
   return (
@@ -11,7 +13,7 @@ export function SignIn({ provider }: { provider?: string }) {
         await signIn(provider)
       }}
     >
-      <LoginButton />
+      <LoginButton/>
     </form>
   )
 }
@@ -29,4 +31,35 @@ export function SignOut() {
       </Button>
     </form>
   )
+}
+
+
+export function SignInAsAdmin() {
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await demoAdminLogin();
+        redirect("/dashboard");
+        
+      }}
+    >
+      <DemoLoginButton text="Take a Tour as Admin" />
+    </form>
+  );
+}
+
+export function SignInAsCustomer() {
+  return (
+    <form
+      action={async () => {
+        "use server";
+        await demoCustomerLogin();
+        redirect("/menu");
+       
+      }}
+    >
+      <DemoLoginButton text="Take a Tour as Customer"/>
+    </form>
+  );
 }
