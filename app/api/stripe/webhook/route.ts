@@ -68,7 +68,7 @@ export async function POST(req: Request) {
               id: expiredOrderId,
             },
             data: {
-              status: "CANCELLED",
+              status: OrderStatus.CANCELLED,
             },
           })
           break
@@ -82,7 +82,7 @@ export async function POST(req: Request) {
               id: failedOrderId,
             },
             data: {
-              status: "CANCELLED",
+              status: OrderStatus.CANCELLED,
             },
           })
           break

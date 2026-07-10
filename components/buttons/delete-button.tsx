@@ -10,8 +10,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { Button} from "@/components/ui/button"
-
+import { Button } from "@/components/ui/button"
+import { DEMO_MODE } from "@/lib/config"
 
 export function DeleteCategoryButton({ id }: { id: string }) {
   const deleteCategoryWithId = deleteMenuCategory.bind(null, id)
@@ -19,7 +19,12 @@ export function DeleteCategoryButton({ id }: { id: string }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button type="button" variant="destructive" aria-label="Delete Category">
+        <Button
+          type="button"
+          variant="destructive"
+          aria-label="Delete Category"
+          disabled={DEMO_MODE}
+        >
           Delete
         </Button>
       </AlertDialogTrigger>
@@ -35,9 +40,11 @@ export function DeleteCategoryButton({ id }: { id: string }) {
           <div>
             <AlertDialogCancel className="w-full">Cancel</AlertDialogCancel>
           </div>
-          
+
           <form action={deleteCategoryWithId}>
-            <AlertDialogAction type="submit" className="w-full">Continue</AlertDialogAction>
+            <AlertDialogAction type="submit" className="w-full">
+              Continue
+            </AlertDialogAction>
           </form>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -50,9 +57,14 @@ export function DeleteItemButton({ id }: { id: string }) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild >
-        <Button type="button" variant="destructive" aria-label="Delete Item">
-           Delete
+      <AlertDialogTrigger asChild>
+        <Button
+          type="button"
+          variant="destructive"
+          aria-label="Delete Item"
+          disabled={DEMO_MODE}
+        >
+          Delete
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -67,9 +79,11 @@ export function DeleteItemButton({ id }: { id: string }) {
           <div>
             <AlertDialogCancel className="w-full">Cancel</AlertDialogCancel>
           </div>
-          
+
           <form action={deleteItemWithId}>
-            <AlertDialogAction type="submit" className="w-full">Continue</AlertDialogAction>
+            <AlertDialogAction type="submit" className="w-full">
+              Continue
+            </AlertDialogAction>
           </form>
         </AlertDialogFooter>
       </AlertDialogContent>

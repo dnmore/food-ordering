@@ -1,26 +1,26 @@
-import 'server-only'
-import { auth } from "@/lib/auth";
-import { cache } from "react";
-import { redirect} from "next/navigation"
+import "server-only"
+import { auth } from "@/lib/auth"
+import { cache } from "react"
+import { redirect } from "next/navigation"
+import { DEMO_MODE } from "@/lib/config"
 
-export const verifySession = cache(async () =>
-{
-    const session = await auth();
-     if (!session?.user) {
-        return null
-      }
+export const verifySession = cache(async () => {
+  const session = await auth()
+  if (!session?.user) {
+    return null
+  }
 
-      return session;
+  return session
 })
 
 export const getUserRole = cache(async () => {
-    const session = await verifySession()
-    return session?.user?.role
+  const session = await verifySession()
+  return session?.user?.role
 })
 
 export const requireAdmin = cache(async () => {
-    const session = await verifySession()
-    if(!session || session.user.role !== 'ADMIN'){
-        redirect("/")
-    }
+  const session = await verifySession()
+  if (!session || session.user.role !== "ADMIN" || !DEMO_MODE) {
+    redirect("/")
+  }
 })

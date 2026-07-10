@@ -8,6 +8,7 @@ import { Field } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { DEMO_MODE } from "@/lib/config"
 
 
 export default function EditMenuCategoryForm({ category }: { category: CategorySelectOption}) {
@@ -54,7 +55,8 @@ export default function EditMenuCategoryForm({ category }: { category: CategoryS
             <Button asChild variant="outline">
               <Link href="/dashboard/categories">Cancel</Link>
             </Button>
-            <Button> Save</Button>
+            <Button disabled={DEMO_MODE}>Save</Button>
+            
           </CardFooter>
         </form>
       </CardContent>

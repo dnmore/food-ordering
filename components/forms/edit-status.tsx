@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { DEMO_MODE } from "@/lib/config"
 
 export default function EditOrderStatusForm({
   id,
@@ -35,8 +36,6 @@ export default function EditOrderStatusForm({
       updateOrderStatus(id, formData, prevState),
     initialState
   )
-
-
 
   return (
     <Card>
@@ -80,7 +79,10 @@ export default function EditOrderStatusForm({
             <Button asChild variant="outline" size="lg">
               <Link href="/dashboard/orders">Cancel</Link>
             </Button>
-            <Button size="lg"> Save</Button>
+            <Button size="lg" disabled={DEMO_MODE}>
+           
+              Save
+            </Button>
           </CardFooter>
         </form>
       </CardContent>

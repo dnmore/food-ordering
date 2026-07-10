@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { DEMO_MODE } from "@/lib/config"
 
 
 export default function CreateMenuItemForm({categoryOptions}: {categoryOptions: CategorySelectOption[]}){
@@ -117,7 +118,7 @@ export default function CreateMenuItemForm({categoryOptions}: {categoryOptions: 
               <Link href="/dashboard/items">Cancel</Link>
             </Button>
 
-           <Button >
+           <Button disabled={DEMO_MODE}>
               Save
             </Button>
           </CardFooter>

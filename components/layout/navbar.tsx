@@ -1,5 +1,4 @@
 import { verifySession } from "@/lib/dal"
-import Link from "next/link"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 import Cart from "@/components/cart/cart"
 import { User } from "lucide-react"
@@ -15,6 +14,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import AdminNavigation from "@/components/layout/admin-navigation"
 import CustomerNavigation from "@/components/layout/customer-navigation"
+
 
 export default async function Navbar() {
   const isAuthenticated = await verifySession()

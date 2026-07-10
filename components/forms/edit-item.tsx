@@ -17,24 +17,30 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/ui/select"
+import { DEMO_MODE } from "@/lib/config"
 
-
-export default function EditMenuItemForm({categoryOptions, menuItem}: {categoryOptions: CategorySelectOption[], menuItem: MenuItem}){
-    const initialState: MenuItemState = {
-        message: null,
-        errors: {}
-    }
-const [state, formAction] = useActionState(
+export default function EditMenuItemForm({
+  categoryOptions,
+  menuItem,
+}: {
+  categoryOptions: CategorySelectOption[]
+  menuItem: MenuItem
+}) {
+  const initialState: MenuItemState = {
+    message: null,
+    errors: {},
+  }
+  const [state, formAction] = useActionState(
     (prevState: MenuItemState, formData: FormData) =>
       updateMenuItem(menuItem.id, prevState, formData),
-    initialState,
-  );
-    
-    const [categoryId, setCategoryId] = useState<string | undefined>()
+    initialState
+  )
 
-    return(
-        <Card>
+  const [categoryId, setCategoryId] = useState<string | undefined>()
+
+  return (
+    <Card>
       <CardContent>
         <form action={formAction}>
           <FieldGroup className="my-4">
@@ -57,7 +63,12 @@ const [state, formAction] = useActionState(
             </Field>
             <Field>
               <Label htmlFor="imageUrl">Image</Label>
-              <Input id="imageUrl" name="imageUrl" type="text" defaultValue={menuItem.imageUrl}/>
+              <Input
+                id="imageUrl"
+                name="imageUrl"
+                type="text"
+                defaultValue={menuItem.imageUrl}
+              />
               <div id="imageUrl-error" aria-live="polite" aria-atomic="true">
                 {state.errors?.imageUrl &&
                   state.errors.imageUrl.map((error: string) => (
@@ -67,8 +78,8 @@ const [state, formAction] = useActionState(
                   ))}
               </div>
             </Field>
-            
-              <Field>
+
+            <Field>
               <Label htmlFor="price">Price (€)</Label>
               <Input
                 id="price"
@@ -87,16 +98,27 @@ const [state, formAction] = useActionState(
             </Field>
             <Field>
               <Label htmlFor="category">Category</Label>
-              <input type="hidden" name="categoryId" value={categoryId} defaultValue={menuItem.categoryId}  />
-              <Select onValueChange={setCategoryId} defaultValue={menuItem.categoryId}>
+              <input
+                type="hidden"
+                name="categoryId"
+                value={categoryId}
+                defaultValue={menuItem.categoryId}
+              />
+              <Select
+                onValueChange={setCategoryId}
+                defaultValue={menuItem.categoryId}
+              >
                 <SelectTrigger className="w-full max-w-48">
                   <SelectValue placeholder="Select Category" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Categories</SelectLabel>
-                    {categoryOptions.map((category) => (<SelectItem key={category.id} value={category.id}>{category.title}</SelectItem>))}
-                    
+                    {categoryOptions.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.title}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -122,12 +144,10 @@ const [state, formAction] = useActionState(
               <Link href="/dashboard/items">Cancel</Link>
             </Button>
 
-           <Button >
-              Save
-            </Button>
+            <Button disabled={DEMO_MODE}>Save</Button>
           </CardFooter>
         </form>
       </CardContent>
     </Card>
-    )
+  )
 }
