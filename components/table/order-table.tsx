@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link"
 import {
   Table,
   TableBody,
@@ -7,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
 import { OrderDetails } from "@/lib/definitions"
 
 export function OrderTable({ order }: { order: OrderDetails }) {
@@ -94,6 +96,11 @@ export function OrderTable({ order }: { order: OrderDetails }) {
           </TableBody>
         </Table>
       </div>
+      <div className="mt-4 flex justify-end">
+          <Button asChild variant="outline">
+            <Link href="/dashboard/orders">Back</Link>
+          </Button>
+        </div>
     </div>
   )
 }
