@@ -9,6 +9,19 @@ A SaaS-style food ordering platform that enables restaurants to manage their own
 ![Vercel](https://img.shields.io/badge/Vercel-Deployment-black)
 
 ---
+
+## Live Demo
+
+[Live Demo](https://food-ordering-cravewaves.vercel.app/)
+
+The live demo provides:
+
+- Read-only access
+- Seeded demo data
+- No sign-up required
+
+---
+
 ## Table of Contents
 
 * [Project Overview](#project-overview)
@@ -82,6 +95,25 @@ Business insights including:
 - Average Order Value
 - Revenue Over Time (Area Chart)
 - Top 5 Selling Items (Horizontal Bar Chart)
+
+## Demo Mode
+
+Supports a read-only demonstration mode.
+
+Characteristics:
+
+- OAuth disabled
+- Seeded demo accounts
+- Read-only UI
+- No registration required
+
+Configuration:
+
+```env
+
+NEXT_PUBLIC_DEMO_MODE=true
+
+```
 
 ---
 
