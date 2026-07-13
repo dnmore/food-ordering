@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import prisma from "@/lib/db";
 import { randomUUID } from "crypto";
+import { SESSION_MAX_AGE, AUTH_COOKIE_NAME } from "./config";
 
 export async function demoAdminLogin() {
   const demoAdminUser = await prisma.user.findUnique({
@@ -15,7 +16,7 @@ export async function demoAdminLogin() {
 
   const sessionToken = randomUUID();
 
-  const expires = new Date(Date.now() + 6 * 60 * 60 * 1000); 
+  const expires = new Date(Date.now() + SESSION_MAX_AGE * 1000); 
 
   await prisma.session.create({
     data: {
@@ -27,12 +28,9 @@ export async function demoAdminLogin() {
 
   const cookieStore = await cookies();
 
-  const cookieName =
-    process.env.NODE_ENV === "production"
-      ? "__Secure-authjs.session-token"
-      : "authjs.session-token";
+  
 
-  cookieStore.set(cookieName, sessionToken, {
+  cookieStore.set(AUTH_COOKIE_NAME, sessionToken, {
     expires,
     httpOnly: true,
     secure: true,
@@ -65,12 +63,8 @@ export async function demoCustomerLogin() {
 
   const cookieStore = await cookies();
 
-  const cookieName =
-    process.env.NODE_ENV === "production"
-      ? "__Secure-authjs.session-token"
-      : "authjs.session-token";
-
-  cookieStore.set(cookieName, sessionToken, {
+  
+  cookieStore.set(AUTH_COOKIE_NAME, sessionToken, {
     expires,
     httpOnly: true,
     secure: true,
