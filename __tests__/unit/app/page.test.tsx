@@ -25,9 +25,7 @@ jest.mock("next/link", () => {
 })
 
 jest.mock("@/components/ui/button", () => ({
-  Button: ({ children, ...props }: any) => (
-    <button {...props}>{children}</button>
-  ),
+  Button: ({ children }: React.PropsWithChildren) => children,
 }))
 
 const adminClick = jest.fn()
@@ -134,7 +132,4 @@ describe("Home Page", () => {
       ).not.toBeInTheDocument()
     })
   })
-
-  
- 
 })
