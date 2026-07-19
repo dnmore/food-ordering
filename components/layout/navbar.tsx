@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { verifySession } from "@/lib/dal"
 import { ModeToggle } from "@/components/ui/mode-toggle"
 import Cart from "@/components/cart/cart"
@@ -25,9 +24,7 @@ export default async function Navbar() {
         aria-label="Main navigation"
         className="flex items-center justify-between"
       >
-        <p className="text-xl font-medium">
-          CraveWaves
-        </p>
+        <p className="text-xl font-medium">CraveWaves</p>
 
         <div className="flex items-center gap-2">
           {isAuthenticated?.user ? (
@@ -40,10 +37,12 @@ export default async function Navbar() {
                     aria-label="Open user menu"
                   >
                     <Avatar>
-                      <AvatarImage
-                        src={`${isAuthenticated.user?.image ?? ""}`}
-                        alt={`${isAuthenticated.user?.name}'s profile picture`}
-                      />
+                      {isAuthenticated.user?.image ? (
+                        <AvatarImage
+                          src={isAuthenticated.user.image}
+                          alt={`${isAuthenticated.user.name}'s profile picture`}
+                        />
+                      ) : null}
                       <AvatarFallback aria-hidden="true">
                         <User />
                       </AvatarFallback>
@@ -55,7 +54,7 @@ export default async function Navbar() {
                   role="menu"
                   className="w-40 p-2"
                 >
-                                   <CustomerNavigation />
+                  <CustomerNavigation />
 
                   <AdminNavigation />
                   <DropdownMenuSeparator />
