@@ -34,6 +34,7 @@ The live demo provides:
 * [Environment Variables](#environment-variables)
 * [Database Setup](#database-setup)
 * [Running Locally](#running-locally)
+* [Running Tests](#running-tests)
 * [Deployment](#deployment)
 * [API Documentation](#api-documentation)
 * [Security Notes](#security-notes)
@@ -344,6 +345,17 @@ http://localhost:3000
 ```
 
 ---
+# Running Tests
+
+The project uses **Jest**.
+
+Run the test suite:
+
+```bash
+npm test
+```
+
+---
 
 # Deployment
 
@@ -360,7 +372,7 @@ External services that must be configured:
 
 - Neon Database
 - Google OAuth
-- Stripe (Test Mode)
+- Stripe 
 
 ---
 
