@@ -21,9 +21,7 @@ export default async function Page() {
           From juicy burgers to Tex-Mex delights, nachos, nuggets, and
           irresistible desserts, satisfy every craving today!
         </p>
-        <Button variant="link" asChild size="lg" className="mt-2 px-6">
-          <Link href="/menu">Explore Our Menu</Link>
-        </Button>
+        
         {DEMO_MODE && !isAuthenticated && (
           <>
             <div className="w-full bg-muted-foreground/20 p-2 text-center capitalize">
