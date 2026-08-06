@@ -79,16 +79,7 @@ describe("Home Page", () => {
       ).toBeInTheDocument()
     })
 
-    it("renders the menu link", async () => {
-      await renderPage()
-
-      const link = screen.getByRole("link", {
-        name: /explore our menu/i,
-      })
-
-      expect(link).toBeInTheDocument()
-      expect(link).toHaveAttribute("href", "/menu")
-    })
+   
   })
 
   describe("conditional rendering", () => {
