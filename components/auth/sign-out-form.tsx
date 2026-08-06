@@ -3,7 +3,7 @@
 import { LogOutIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/app/store/useCartStore"
-import { redirect } from "next/navigation"
+
 
 type Props = {
     action: () => Promise<void>
