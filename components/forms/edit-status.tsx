@@ -76,10 +76,10 @@ export default function EditOrderStatusForm({
             )}
           </div>
           <CardFooter className="mt-6 flex justify-end gap-4">
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="outline">
               <Link href="/dashboard/orders">Cancel</Link>
             </Button>
-            <Button size="lg" disabled={DEMO_MODE}>
+            <Button disabled={DEMO_MODE}>
            
               Save
             </Button>
