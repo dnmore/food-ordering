@@ -9,9 +9,13 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { DEMO_MODE } from "@/lib/config"
+import { DemoButton } from "@/components/buttons/demo-button"
 
-
-export default function EditMenuCategoryForm({ category }: { category: CategorySelectOption}) {
+export default function EditMenuCategoryForm({
+  category,
+}: {
+  category: CategorySelectOption
+}) {
   const initialState: MenuCategoryState = {
     message: null,
     errors: {},
@@ -20,8 +24,8 @@ export default function EditMenuCategoryForm({ category }: { category: CategoryS
   const [state, formAction] = useActionState(
     (prevState: MenuCategoryState, formData: FormData) =>
       updateMenuCategory(category.id, formData, prevState),
-    initialState,
-  );
+    initialState
+  )
 
   return (
     <Card>
@@ -55,8 +59,7 @@ export default function EditMenuCategoryForm({ category }: { category: CategoryS
             <Button asChild variant="outline">
               <Link href="/dashboard/categories">Cancel</Link>
             </Button>
-            <Button disabled={DEMO_MODE}>Save</Button>
-            
+            {DEMO_MODE ? <DemoButton text="Save" /> : <Button> Save</Button>}
           </CardFooter>
         </form>
       </CardContent>

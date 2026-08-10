@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { DEMO_MODE } from "@/lib/config"
+import { DemoButton } from "@/components/buttons/demo-button"
 
 export default function EditOrderStatusForm({
   id,
@@ -79,10 +80,9 @@ export default function EditOrderStatusForm({
             <Button asChild variant="outline">
               <Link href="/dashboard/orders">Cancel</Link>
             </Button>
-            <Button disabled={DEMO_MODE}>
+            {DEMO_MODE ? <DemoButton text="Save" /> : <Button> Save</Button>}
            
-              Save
-            </Button>
+           
           </CardFooter>
         </form>
       </CardContent>

@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { DEMO_MODE } from "@/lib/config"
+import { DemoButton } from "@/components/buttons/demo-button"
 
 export default function EditMenuItemForm({
   categoryOptions,
@@ -143,8 +144,12 @@ export default function EditMenuItemForm({
             <Button asChild variant="outline">
               <Link href="/dashboard/items">Cancel</Link>
             </Button>
-
-            <Button disabled={DEMO_MODE}>Save</Button>
+{DEMO_MODE ? (
+  <DemoButton text="Save" />
+) : (
+   <Button>Save</Button>
+)}
+           
           </CardFooter>
         </form>
       </CardContent>
