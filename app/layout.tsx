@@ -3,6 +3,7 @@ import { Geist } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 
 import Navbar from "@/components/layout/navbar"
@@ -32,10 +33,12 @@ export default async function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <main className="flex min-h-screen flex-col">
-            <Navbar />
-            {children}
-          </main>
+          <TooltipProvider>
+            <main className="flex min-h-screen flex-col">
+              <Navbar />
+              {children}
+            </main>
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
