@@ -37,6 +37,7 @@ export function CheckoutForm() {
           })}
         />
       ))}
+      <div className="py-4">
       {DEMO_MODE ? (
         <DemoButton text="Place Order" />
       ) : (
@@ -48,6 +49,7 @@ export function CheckoutForm() {
       ))}
 
       {state.message && <p className="text-xs text-red-600">{state.message}</p>}
+      </div>
     </form>
   )
 }
