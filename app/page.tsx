@@ -25,7 +25,7 @@ export default async function Page() {
         {DEMO_MODE && !isAuthenticated && (
           <>
             <div className="w-full bg-muted-foreground/20 p-2 text-center capitalize">
-              <p>Demo Mode: OAuth disabled. Use demo accounts to explore.</p>
+              <p>Demo Mode: OAuth disabled. Use read-only demo accounts to explore.</p>
             </div>
             <div className="flex flex-col items-center justify-center gap-4 pt-6 md:flex-row">
               <SignInAsAdmin />
