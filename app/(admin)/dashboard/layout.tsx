@@ -1,4 +1,3 @@
-import { requireAdmin } from "@/lib/dal";
 import { AdminSidebar } from "@/components/layout/admin-sidebar";
 
 
@@ -9,7 +8,7 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   
-   await requireAdmin()
+  
 
   return (
     <div className="flex flex-1 overflow-hidden">
