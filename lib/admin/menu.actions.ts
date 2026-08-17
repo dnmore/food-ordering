@@ -1,6 +1,6 @@
 "use server"
 import prisma from "@/lib/db"
-import { requireAdmin } from "@/lib/dal"
+import { requireAdminMutation } from "@/lib/dal"
 import { revalidateTag, revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
@@ -39,7 +39,7 @@ export async function createMenuCategory(
   prevState: MenuCategoryState,
   formData: FormData
 ) {
-  await requireAdmin()
+  await requireAdminMutation()
 
   const rawData = {
     title: formData.get("title"),
@@ -73,7 +73,7 @@ export async function createMenuItem(
   prevState: MenuItemState,
   formData: FormData
 ) {
-  await requireAdmin()
+  await requireAdminMutation()
 
   const rawData = {
     name: formData.get("name"),
@@ -114,7 +114,7 @@ export async function createMenuItem(
   redirect("/dashboard/items")
 }
 export async function deleteMenuCategory(id: string) {
-  await requireAdmin()
+  await requireAdminMutation()
 
   await prisma.menuCategory.delete({
     where: {
@@ -128,7 +128,7 @@ export async function deleteMenuCategory(id: string) {
 }
 
 export async function deleteMenuItem(id: string) {
-  await requireAdmin()
+  await requireAdminMutation()
 
   await prisma.menuItem.delete({
     where: {
@@ -146,7 +146,7 @@ export async function updateMenuCategory(
   formData: FormData,
   prevState: MenuCategoryState
 ) {
-  await requireAdmin()
+  await requireAdminMutation()
 
   const rawData = {
     title: formData.get("title"),
@@ -181,7 +181,7 @@ export async function updateMenuItem(
   prevState: MenuItemState,
   formData: FormData
 ) {
-  await requireAdmin()
+  await requireAdminMutation()
 
   const rawData = {
     name: formData.get("name"),
