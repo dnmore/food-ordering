@@ -1,4 +1,5 @@
 import type { Metadata} from "next"
+import { requireAdminRouteAccess } from "@/lib/dal";
 import { Suspense } from "react"
 import { DataTable } from "@/components/ui/data-table"
 import { orderColumns } from "./columns"
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+  await requireAdminRouteAccess()
   const orderTableData = await getOrdersTable()
   return (
     <div>
