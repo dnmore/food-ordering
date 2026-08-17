@@ -1,4 +1,5 @@
 import type { Metadata} from "next"
+import { requireAdminRouteAccess } from "@/lib/dal";
 import { Suspense } from "react"
 import DashboardCards from "@/components/cards/dashboard-cards"
 import { RevenueCard } from "@/components/cards/revenue-card"
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
   title: 'Analytics',
 };
 
-export default function Page() {
+export default async function Page() {
+  await requireAdminRouteAccess();
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-xl font-semibold md:text-2xl">Analytics</h1>
