@@ -1,4 +1,5 @@
 import type { Metadata} from "next"
+import { requireAdminRouteAccess } from "@/lib/dal";
 import { Suspense } from "react"
 import CreateMenuItemForm from "@/components/forms/create-item"
 import { getCategoriesSelectOptions } from "@/lib/data"
@@ -9,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+  await requireAdminRouteAccess()
   const categoriesData = await getCategoriesSelectOptions()
 
   return (
