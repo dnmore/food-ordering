@@ -1,6 +1,6 @@
 "use server"
 import prisma from "@/lib/db"
-import { requireAdmin } from "@/lib/dal"
+import { requireAdminMutation } from "@/lib/dal"
 import { revalidateTag, revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
@@ -22,7 +22,7 @@ export async function updateOrderStatus(
   formData: FormData,
   prevState: OrderStatusState
 ) {
-  await requireAdmin()
+  await requireAdminMutation()
 
   const rawData = {
     status: formData.get("status"),
