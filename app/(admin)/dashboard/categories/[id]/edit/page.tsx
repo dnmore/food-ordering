@@ -1,4 +1,5 @@
 import type { Metadata} from "next"
+import { requireAdminRouteAccess } from "@/lib/dal";
 import { Suspense } from "react"
 import prisma from "@/lib/db"
 import EditMenuCategoryForm from "@/components/forms/edit-category"
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
+  await requireAdminRouteAccess()
   const { id } = await props.params
 
   const categoryToUpdate = await prisma?.menuCategory.findUnique({
