@@ -1,4 +1,5 @@
 import type { Metadata} from "next"
+import { requireAdminRouteAccess } from "@/lib/dal";
 import { Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
+  await requireAdminRouteAccess()
   const categoriesData = await getCategoriesTable()
 
   return (
