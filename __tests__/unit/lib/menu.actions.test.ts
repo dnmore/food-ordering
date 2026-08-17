@@ -8,7 +8,7 @@ import {
 } from "@/lib/admin/menu.actions"
 
 import prisma from "@/lib/db"
-import { requireAdmin } from "@/lib/dal"
+import { requireAdminMutation } from "@/lib/dal"
 import { revalidateTag, revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
@@ -29,7 +29,7 @@ jest.mock("@/lib/db", () => ({
 }))
 
 jest.mock("@/lib/dal", () => ({
-  requireAdmin: jest.fn(),
+  requireAdminMutation: jest.fn(),
 }))
 
 jest.mock("next/cache", () => ({
@@ -42,7 +42,7 @@ jest.mock("next/navigation", () => ({
 }))
 
 const mockedPrisma = prisma as jest.Mocked<typeof prisma>
-const mockedRequireAdmin = requireAdmin as jest.Mock
+const mockedRequireAdmin = requireAdminMutation as jest.Mock
 const mockedRedirect = redirect as jest.MockedFunction<typeof redirect>
 const mockedRevalidateTag = revalidateTag as jest.Mock
 const mockedRevalidatePath = revalidatePath as jest.Mock
@@ -66,14 +66,14 @@ describe("Menu Server Actions", () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    mockedRequireAdmin.mockResolvedValue(undefined)
+    mockedRequireAdmin.mockResolvedValue(null)
   })
 
   describe("createMenuCategory", () => {
     it("creates category successfully", async () => {
       await createMenuCategory({}, categoryForm())
 
-      expect(requireAdmin).toHaveBeenCalled()
+      expect(requireAdminMutation).toHaveBeenCalled()
 
       expect(mockedPrisma.menuCategory.create).toHaveBeenCalledWith({
         data: {

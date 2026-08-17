@@ -1,11 +1,16 @@
 import { render, screen } from "@testing-library/react"
 import Page from "@/app/(admin)/dashboard/items/page"
 import { getMenuItemsTable } from "@/lib/data"
+import { requireAdminRouteAccess } from "@/lib/dal";
 
 // ---------- Mocks ----------
 
 jest.mock("@/lib/data", () => ({
   getMenuItemsTable: jest.fn(),
+}))
+
+jest.mock("@/lib/dal", () => ({
+  requireAdminRouteAccess: jest.fn(),
 }))
 
 jest.mock("next/link", () => {
@@ -58,17 +63,32 @@ jest.mock("@/components/ui/empty", () => ({
 }))
 
 const mockedGetMenuItemsTable = getMenuItemsTable as jest.Mock
+const mockedRequireAdminRouteAccess = requireAdminRouteAccess as jest.MockedFunction<
+  typeof requireAdminRouteAccess
+>
 
 describe("Menu Items Page", () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
+   async function renderPage() {
+        const ui = await Page()
+        return render(ui)
+      }
+
   describe("rendering", () => {
     it("renders page heading", async () => {
+       mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetMenuItemsTable.mockResolvedValue([])
 
-      render(await Page())
+     await renderPage()
 
       expect(
         screen.getByRole("heading", {
@@ -79,12 +99,19 @@ describe("Menu Items Page", () => {
     })
 
     it("renders populated table", async () => {
+       mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetMenuItemsTable.mockResolvedValue([
         { id: "1", name: "Tech" },
         { id: "2", name: "News" },
       ])
 
-      render(await Page())
+      await renderPage()
 
       expect(screen.getByTestId("data-table")).toBeInTheDocument()
       expect(screen.getByText("Rows: 2")).toBeInTheDocument()
@@ -93,9 +120,16 @@ describe("Menu Items Page", () => {
 
   describe("conditional rendering", () => {
     it("renders empty state when there are no items", async () => {
+       mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetMenuItemsTable.mockResolvedValue([])
 
-      render(await Page())
+      await renderPage()
 
       expect(
         screen.getByRole("heading", {
@@ -108,9 +142,16 @@ describe("Menu Items Page", () => {
     })
 
     it("renders table when menu items exist", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetMenuItemsTable.mockResolvedValue([{ id: "1", name: "A" }])
 
-      render(await Page())
+      await renderPage()
 
       expect(screen.getByTestId("data-table")).toBeInTheDocument()
 
@@ -118,9 +159,16 @@ describe("Menu Items Page", () => {
     })
 
     it("renders folder icon in empty state", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetMenuItemsTable.mockResolvedValue([])
 
-      render(await Page())
+      await renderPage()
 
       expect(screen.getByTestId("folder-icon")).toBeInTheDocument()
     })
@@ -128,9 +176,16 @@ describe("Menu Items Page", () => {
 
   describe("empty state", () => {
     it("shows empty description", async () => {
+       mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetMenuItemsTable.mockResolvedValue([])
 
-      render(await Page())
+      await renderPage()
 
       expect(
         screen.getByText(/you haven't created any menu item yet/i)
@@ -138,9 +193,16 @@ describe("Menu Items Page", () => {
     })
 
     it("shows add item link", async () => {
+       mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetMenuItemsTable.mockResolvedValue([])
 
-      render(await Page())
+      await renderPage()
 
       const link = screen.getByRole("link", {
         name: /add item/i,
@@ -152,9 +214,16 @@ describe("Menu Items Page", () => {
 
   describe("loading state", () => {
     it("does not render the Suspense fallback after async page resolves", async () => {
+       mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetMenuItemsTable.mockResolvedValue([{ id: "1" }])
 
-      render(await Page())
+      await renderPage()
 
       expect(screen.queryByTestId("skeleton-table")).not.toBeInTheDocument()
     })

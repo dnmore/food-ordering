@@ -1,11 +1,16 @@
 import { render, screen } from "@testing-library/react"
 import Page from "@/app/(admin)/dashboard/categories/page"
 import { getCategoriesTable } from "@/lib/data"
+import { requireAdminRouteAccess } from "@/lib/dal";
 
 // ---------- Mocks ----------
 
 jest.mock("@/lib/data", () => ({
   getCategoriesTable: jest.fn(),
+}))
+
+jest.mock("@/lib/dal", () => ({
+  requireAdminRouteAccess: jest.fn(),
 }))
 
 jest.mock("next/link", () => {
@@ -58,17 +63,32 @@ jest.mock("@/components/ui/empty", () => ({
 }))
 
 const mockedGetCategoriesTable = getCategoriesTable as jest.Mock
+const mockedRequireAdminRouteAccess = requireAdminRouteAccess as jest.MockedFunction<
+  typeof requireAdminRouteAccess
+>
 
 describe("Categories Page", () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
+  async function renderPage() {
+        const ui = await Page()
+        return render(ui)
+      }
+
   describe("rendering", () => {
     it("renders page heading", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetCategoriesTable.mockResolvedValue([])
 
-      render(await Page())
+      await renderPage()
 
       expect(
         screen.getByRole("heading", {
@@ -79,12 +99,19 @@ describe("Categories Page", () => {
     })
 
     it("renders populated table", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetCategoriesTable.mockResolvedValue([
         { id: "1", name: "Tech" },
         { id: "2", name: "News" },
       ])
 
-      render(await Page())
+      await renderPage()
 
       expect(screen.getByTestId("data-table")).toBeInTheDocument()
       expect(screen.getByText("Rows: 2")).toBeInTheDocument()
@@ -93,9 +120,16 @@ describe("Categories Page", () => {
 
   describe("conditional rendering", () => {
     it("renders empty state when there are no categories", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetCategoriesTable.mockResolvedValue([])
 
-      render(await Page())
+      await renderPage()
 
       expect(
         screen.getByRole("heading", {
@@ -108,9 +142,16 @@ describe("Categories Page", () => {
     })
 
     it("renders table when categories exist", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetCategoriesTable.mockResolvedValue([{ id: "1", name: "A" }])
 
-      render(await Page())
+      await renderPage()
 
       expect(screen.getByTestId("data-table")).toBeInTheDocument()
 
@@ -118,19 +159,33 @@ describe("Categories Page", () => {
     })
 
     it("renders folder icon in empty state", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetCategoriesTable.mockResolvedValue([])
 
-      render(await Page())
+     await renderPage()
 
       expect(screen.getByTestId("folder-icon")).toBeInTheDocument()
     })
   })
 
   describe("empty state", () => {
+    mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
     it("shows empty description", async () => {
       mockedGetCategoriesTable.mockResolvedValue([])
 
-      render(await Page())
+     await renderPage()
 
       expect(
         screen.getByText(/you haven't created any categories yet/i)
@@ -138,9 +193,16 @@ describe("Categories Page", () => {
     })
 
     it("shows add category link", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetCategoriesTable.mockResolvedValue([])
 
-      render(await Page())
+     await renderPage()
 
       const link = screen.getByRole("link", {
         name: /add category/i,
@@ -153,9 +215,16 @@ describe("Categories Page", () => {
   describe("loading state", () => {
     
     it("does not render the Suspense fallback after async page resolves", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetCategoriesTable.mockResolvedValue([{ id: "1" }])
 
-      render(await Page())
+     await renderPage()
 
       expect(screen.queryByTestId("skeleton-table")).not.toBeInTheDocument()
     })

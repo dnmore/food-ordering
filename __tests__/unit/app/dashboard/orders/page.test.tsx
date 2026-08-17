@@ -1,11 +1,16 @@
 import { render, screen } from "@testing-library/react"
 import Page from "@/app/(admin)/dashboard/orders/page"
 import { getOrdersTable } from "@/lib/data"
+import { requireAdminRouteAccess } from "@/lib/dal";
 
 // ---------- Mocks ----------
 
 jest.mock("@/lib/data", () => ({
   getOrdersTable: jest.fn(),
+}))
+
+jest.mock("@/lib/dal", () => ({
+  requireAdminRouteAccess: jest.fn(),
 }))
 
 jest.mock("next/link", () => {
@@ -54,17 +59,32 @@ jest.mock("@/components/ui/empty", () => ({
 }))
 
 const mockedGetOrdersTable = getOrdersTable as jest.Mock
+const mockedRequireAdminRouteAccess = requireAdminRouteAccess as jest.MockedFunction<
+  typeof requireAdminRouteAccess
+>
 
 describe("Orders Page", () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
+   async function renderPage() {
+      const ui = await Page()
+      return render(ui)
+    }
+
   describe("rendering", () => {
     it("renders page heading", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetOrdersTable.mockResolvedValue([])
 
-      render(await Page())
+       await renderPage()
 
       expect(
         screen.getByRole("heading", {
@@ -75,12 +95,19 @@ describe("Orders Page", () => {
     })
 
     it("renders populated table", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetOrdersTable.mockResolvedValue([
         { id: "1", name: "Tech" },
         { id: "2", name: "News" },
       ])
 
-      render(await Page())
+       await renderPage()
 
       expect(screen.getByTestId("data-table")).toBeInTheDocument()
       expect(screen.getByText("Rows: 2")).toBeInTheDocument()
@@ -89,9 +116,16 @@ describe("Orders Page", () => {
 
   describe("conditional rendering", () => {
     it("renders empty state when there are no items", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetOrdersTable.mockResolvedValue([])
 
-      render(await Page())
+       await renderPage()
 
       expect(
         screen.getByRole("heading", {
@@ -104,9 +138,16 @@ describe("Orders Page", () => {
     })
 
     it("renders table when orders exist", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetOrdersTable.mockResolvedValue([{ id: "1", name: "A" }])
 
-      render(await Page())
+       await renderPage()
 
       expect(screen.getByTestId("data-table")).toBeInTheDocument()
 
@@ -114,9 +155,16 @@ describe("Orders Page", () => {
     })
 
     it("renders folder icon in empty state", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetOrdersTable.mockResolvedValue([])
 
-      render(await Page())
+      await renderPage()
 
       expect(screen.getByTestId("folder-icon")).toBeInTheDocument()
     })
@@ -124,9 +172,16 @@ describe("Orders Page", () => {
 
   describe("empty state", () => {
     it("shows empty description", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetOrdersTable.mockResolvedValue([])
 
-      render(await Page())
+       await renderPage()
 
       expect(
         screen.getByText(/you haven't received any order yet/i)
@@ -136,9 +191,16 @@ describe("Orders Page", () => {
 
   describe("loading state", () => {
     it("does not render the Suspense fallback after async page resolves", async () => {
+      mockedRequireAdminRouteAccess.mockResolvedValue({
+        
+          id: "1",
+          role: "ADMIN",
+          isDemo: false,
+        
+      })
       mockedGetOrdersTable.mockResolvedValue([{ id: "1" }])
 
-      render(await Page())
+     await renderPage()
 
       expect(screen.queryByTestId("skeleton-table")).not.toBeInTheDocument()
     })

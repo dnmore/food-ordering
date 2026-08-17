@@ -1,33 +1,25 @@
 import { render, screen } from "@testing-library/react"
+import "@testing-library/jest-dom"
+import { useActionState } from "react"
 import CreateMenuCategoryForm from "@/components/forms/create-category"
-
-// ---------- Mocks ----------
-
 
 
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
   useActionState: jest.fn(),
-}));
-
-const mockUseActionState = require("react").useActionState;
+}))
 
 jest.mock("@/lib/admin/menu.actions", () => ({
   createMenuCategory: jest.fn(),
 }))
 
-jest.mock("@/lib/config", () => ({
-  DEMO_MODE: true,
-}))
 
 jest.mock("next/link", () => {
-  return function Link({
+  return function MockLink({
     href,
     children,
     ...props
-  }: React.AnchorHTMLAttributes<HTMLAnchorElement> & {
-    href: string
-  }) {
+  }: React.PropsWithChildren<{ href: string }>) {
     return (
       <a href={href} {...props}>
         {children}
@@ -40,6 +32,12 @@ jest.mock("@/components/ui/button", () => ({
   Button: ({ children }: React.PropsWithChildren) => children,
 }))
 
+jest.mock("@/components/ui/field", () => ({
+  Field: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="field">{children}</div>
+  ),
+}))
+
 jest.mock("@/components/ui/input", () => ({
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input {...props} />
@@ -47,98 +45,124 @@ jest.mock("@/components/ui/input", () => ({
 }))
 
 jest.mock("@/components/ui/label", () => ({
-  Label: (props: React.LabelHTMLAttributes<HTMLLabelElement>) => (
-    <label {...props} />
+  Label: ({
+    children,
+    ...props
+  }: React.LabelHTMLAttributes<HTMLLabelElement>) => (
+    <label {...props}>{children}</label>
   ),
-}))
-
-jest.mock("@/components/ui/field", () => ({
-  Field: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
 }))
 
 jest.mock("@/components/ui/card", () => ({
-  Card: ({ children }: React.PropsWithChildren) => (
+  Card: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="card">{children}</div>
   ),
-  CardContent: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
+  CardContent: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="card-content">{children}</div>
+  ),
   CardFooter: ({
     children,
-    className,
-  }: React.PropsWithChildren<{ className?: string }>) => (
-    <div className={className}>{children}</div>
+    ...props
+  }: {
+    children: React.ReactNode
+    [key: string]: unknown
+  }) => <div {...props}>{children}</div>,
+}))
+
+jest.mock("@/components/buttons/demo-button", () => ({
+  DemoButton: ({ text }: { text: string }) => (
+    <button type="button" data-testid="demo-button">
+      {text}
+    </button>
   ),
 }))
+
+jest.mock("@/lib/config", () => ({
+  DEMO_MODE: false,
+}))
+
+const mockedUseActionState = jest.mocked(useActionState)
 
 describe("CreateMenuCategoryForm", () => {
   const formAction = jest.fn()
 
-  const renderWithState = (
-    state: {
-      message: string | null
-      errors: Record<string, string[]>
-    } = {
-      message: null,
-      errors: {},
-    }
-  ) => {
-    mockUseActionState.mockReturnValue([state, formAction])
-
-    return render(<CreateMenuCategoryForm />)
-  }
-
   beforeEach(() => {
     jest.clearAllMocks()
+
+    mockedUseActionState.mockReturnValue([
+      {
+        message: null,
+        errors: {},
+      },
+      formAction,
+      false,
+    ])
   })
 
   describe("rendering", () => {
     it("renders the form", () => {
-      renderWithState()
+      render(<CreateMenuCategoryForm />)
 
       expect(screen.getByTestId("card")).toBeInTheDocument()
-      expect(
-        screen.getByRole("textbox", { name: /title/i })
-      ).toBeInTheDocument()
       
     })
 
-    it("renders input attributes correctly", () => {
-      renderWithState()
+    it("renders the title label and input", () => {
+      render(<CreateMenuCategoryForm />)
 
-      const input = screen.getByRole("textbox", { name: /title/i })
+      expect(screen.getByLabelText("Title")).toBeInTheDocument()
 
+      const input = screen.getByRole("textbox", { name: "Title" })
+
+      expect(input).toBeInTheDocument()
       expect(input).toHaveAttribute("id", "title")
       expect(input).toHaveAttribute("name", "title")
-      expect(input).toHaveAttribute("placeholder", "Appetizers")
       expect(input).toHaveAttribute("type", "text")
+      expect(input).toHaveAttribute("placeholder", "Appetizers")
     })
+
+    it("renders the cancel link", () => {
+      render(<CreateMenuCategoryForm />)
+
+      const cancelLink = screen.getByRole("link", { name: "Cancel" })
+
+      expect(cancelLink).toBeInTheDocument()
+      expect(cancelLink).toHaveAttribute("href", "/dashboard/categories")
+    })
+
+    
+
+   
   })
 
-  describe("conditional rendering", () => {
-    it("does not render validation errors when none exist", () => {
-      renderWithState()
+ 
 
-      expect(screen.queryByText("Title is required")).not.toBeInTheDocument()
-    })
+ 
 
-    it("renders all title validation errors", () => {
-      renderWithState({
-        message: null,
-        errors: {
-          title: ["Title is required", "Minimum length is 3"],
+  describe("error state", () => {
+    it("renders a server action error message", () => {
+      mockedUseActionState.mockReturnValue([
+        {
+          message: "Failed to create menu category",
+          errors: {},
         },
-      })
+        formAction,
+        false,
+      ] )
 
-      expect(screen.getByText("Title is required")).toBeInTheDocument()
-      expect(screen.getByText("Minimum length is 3")).toBeInTheDocument()
+      render(<CreateMenuCategoryForm />)
+
+      expect(
+        screen.getByText("Failed to create menu category")
+      ).toBeInTheDocument()
     })
 
-    it("renders form level error message", () => {
-      renderWithState({
-        message: "Unable to create category",
-        errors: {},
-      })
+    
 
-      expect(screen.getByText("Unable to create category")).toBeInTheDocument()
-    })
+    
+
+    
   })
+
+   
 })

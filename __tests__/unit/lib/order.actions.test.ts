@@ -1,6 +1,6 @@
 import { updateOrderStatus } from "@/lib/admin/order.actions"
 import prisma from "@/lib/db"
-import { requireAdmin } from "@/lib/dal"
+import { requireAdminMutation } from "@/lib/dal"
 import { revalidateTag, revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
@@ -14,7 +14,7 @@ jest.mock("@/lib/db", () => ({
 }))
 
 jest.mock("@/lib/dal", () => ({
-  requireAdmin: jest.fn(),
+  requireAdminMutation: jest.fn(),
 }))
 
 jest.mock("next/cache", () => ({
@@ -27,7 +27,7 @@ jest.mock("next/navigation", () => ({
 }))
 
 const mockedPrisma = prisma as jest.Mocked<typeof prisma>
-const mockedRequireAdmin = requireAdmin as jest.Mock
+const mockedRequireAdmin = requireAdminMutation as jest.Mock
 const mockedRevalidateTag = revalidateTag as jest.Mock
 const mockedRevalidatePath = revalidatePath as jest.Mock
 const mockedRedirect = redirect as jest.MockedFunction<typeof redirect>

@@ -90,7 +90,7 @@ describe("Home Page", () => {
 
       expect(
         screen.getByText(
-          /demo mode: oauth disabled\. use demo accounts to explore\./i
+          /demo mode: oauth disabled\. Use read-only demo accounts to explore\./i
         )
       ).toBeInTheDocument()
 

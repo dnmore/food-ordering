@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { verifySession, getUserRole, requireAdmin } from "@/lib/dal"
+import { verifySession, getUserRole, requireAdminRouteAccess } from "@/lib/dal"
 
 // ----- Mocks -----
 
@@ -74,17 +74,18 @@ describe("auth server helpers", () => {
     })
   })
 
-  describe("requireAdmin()", () => {
+  describe("requireAdminRouteAccess()", () => {
     it("completes successfully for an admin", async () => {
       mockedAuth.mockResolvedValue({
         user: {
           id: "1",
           role: "ADMIN",
+          isDemo: false,
         },
       })
 
-      const result = await requireAdmin()
-      expect(result).toBeUndefined()
+      await requireAdminRouteAccess()
+      
 
       expect(mockedRedirect).not.toHaveBeenCalled()
     })
@@ -92,7 +93,7 @@ describe("auth server helpers", () => {
     it("redirects when unauthenticated (authentication failure)", async () => {
       mockedAuth.mockResolvedValue(null)
 
-      await requireAdmin()
+      await requireAdminRouteAccess()
 
       expect(mockedRedirect).toHaveBeenCalledWith("/")
     })
@@ -105,7 +106,7 @@ describe("auth server helpers", () => {
         },
       })
 
-      await requireAdmin()
+      await requireAdminRouteAccess()
 
       expect(mockedRedirect).toHaveBeenCalledWith("/")
     })
@@ -113,7 +114,7 @@ describe("auth server helpers", () => {
     it("redirects when session has no user", async () => {
       mockedAuth.mockResolvedValue({})
 
-      await requireAdmin()
+      await requireAdminRouteAccess()
 
       expect(mockedRedirect).toHaveBeenCalledWith("/")
     })
