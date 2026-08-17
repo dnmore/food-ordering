@@ -18,9 +18,32 @@ export const getUserRole = cache(async () => {
   return session?.user?.role
 })
 
-export const requireAdmin = cache(async () => {
-  const session = await verifySession()
-  if (!session || session.user.role !== "ADMIN" || !DEMO_MODE) {
-    redirect("/")
+export const getCurrentUser = cache(async () => {
+  const session = await auth()
+
+  if(!session?.user?.id) return null
+
+  return {
+    id: session.user.id,
+    role: session.user.role,
+    isDemo: DEMO_MODE && (session.user.email === process.env.DEMO_ADMIN_EMAIL || session.user.email === process.env.DEMO_CUSTOMER_EMAIL)
   }
 })
+
+
+export async function requireAdminRouteAccess(){
+  const user = await getCurrentUser()
+  if (!user || user.role !== "ADMIN") {
+    redirect("/")
+  }
+
+  return user
+}
+
+export async function requireAdminMutation(){
+  const user = await getCurrentUser()
+  if (!user || user.role !== "ADMIN" || user.isDemo) {
+    throw new Error("Unauthorized")
+  }
+  return user
+}
