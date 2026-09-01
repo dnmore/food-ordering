@@ -55,9 +55,9 @@ export default async function Page() {
           <CardHeader>
             <CardTitle>
               <h3 className="text-xl font-bold md:text-2xl">
-               Ready to take control of your ordering?
+                Want to see it in action?
               </h3>
-            </CardTitle>
+            </CardTitle>            
           </CardHeader>
           <CardContent>
             <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
