@@ -5,7 +5,7 @@ import {
 } from "@/components/auth/auth-components"
 import { DEMO_MODE } from "@/lib/config"
 import { verifySession } from "@/lib/dal"
-import { ValueStripe } from "@/components/landing/value-strip"
+import { ValueStripe } from "@/components/landing/value-stripe"
 import { Features } from "@/components/landing/features"
 import { OwnBusiness } from "@/components/landing/own-business"
 
@@ -13,8 +13,8 @@ export default async function Page() {
   const isAuthenticated = await verifySession()
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 py-4 px-4">
-      <div className="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-16 bg-zinc-50 dark:bg-neutral-900 shadow-sm">
+    <div className="flex flex-col items-center justify-center gap-4 px-4 py-4">
+      <div className="container mx-auto flex min-h-[70vh] items-center justify-center bg-zinc-50 px-4 py-16 shadow-sm dark:bg-neutral-900">
         <div className="mx-auto flex max-w-xl flex-col items-center gap-4 py-10 text-center">
           <h1 className="text-4xl font-semibold md:text-6xl">
             Your restaurant deserves an ordering system you own.
@@ -50,21 +50,23 @@ export default async function Page() {
       {/* Own Your Business */}
       <OwnBusiness />
       {/* CTA */}
-      <Card className="w-full bg-zinc-50 py-12 text-center md:px-8 dark:bg-neutral-900">
-        <CardHeader>
-          <CardTitle>
-            <h3 className="text-xl font-bold md:text-2xl">
-              Want to see it in action?
-            </h3>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
-            <SignInAsAdmin />
-            <SignInAsCustomer />
-          </div>
-        </CardContent>
-      </Card>
+      {DEMO_MODE && !isAuthenticated && (
+        <Card className="w-full bg-zinc-50 py-12 text-center md:px-8 dark:bg-neutral-900">
+          <CardHeader>
+            <CardTitle>
+              <h3 className="text-xl font-bold md:text-2xl">
+               Ready to take control of your ordering?
+              </h3>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
+              <SignInAsAdmin />
+              <SignInAsCustomer />
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

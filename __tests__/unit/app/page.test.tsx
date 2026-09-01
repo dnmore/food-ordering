@@ -1,5 +1,4 @@
-import { render, screen, cleanup } from "@testing-library/react"
-
+import { render, screen } from "@testing-library/react"
 import Page from "@/app/page"
 
 jest.mock("@/lib/dal", () => ({
@@ -25,17 +24,40 @@ jest.mock("next/link", () => {
 })
 
 jest.mock("@/components/ui/button", () => ({
-  Button: ({ children }: React.PropsWithChildren) => children,
+  Button: ({ children }: React.PropsWithChildren) => (
+    <button>{children}</button>
+  ),
 }))
 
-const adminClick = jest.fn()
-const customerClick = jest.fn()
+const mockAdminClick = jest.fn()
+const mockCustomerClick = jest.fn()
 
 jest.mock("@/components/auth/auth-components", () => ({
-  SignInAsAdmin: () => <button onClick={adminClick}>Sign in as Admin</button>,
-  SignInAsCustomer: () => (
-    <button onClick={customerClick}>Sign in as Customer</button>
+  SignInAsAdmin: () => (
+    <button onClick={mockAdminClick}>Sign in as Admin</button>
   ),
+  SignInAsCustomer: () => (
+    <button onClick={mockCustomerClick}>Sign in as Customer</button>
+  ),
+}))
+
+jest.mock("@/components/landing/value-stripe", () => ({
+  ValueStripe: () => <div data-testid="value-stripe" />,
+}))
+
+jest.mock("@/components/landing/features", () => ({
+  Features: () => <div data-testid="features" />,
+}))
+
+jest.mock("@/components/landing/own-business", () => ({
+  OwnBusiness: () => <div data-testid="own-business" />,
+}))
+
+jest.mock("@/components/ui/card", () => ({
+  Card: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
+  CardContent: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
+  CardHeader: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
+  CardTitle: ({ children }: React.PropsWithChildren) => <div>{children}</div>,
 }))
 
 const { verifySession } = jest.requireMock("@/lib/dal") as {
@@ -53,17 +75,13 @@ describe("Home Page", () => {
     verifySession.mockResolvedValue(false)
   })
 
-  afterEach(() => {
-    cleanup()
-  })
-
   describe("rendering", () => {
     it("renders the main heading", async () => {
       await renderPage()
 
       expect(
         screen.getByRole("heading", {
-          name: /crave\. savor\. repeat\./i,
+          name: /Your restaurant deserves an ordering system you own/i,
           level: 1,
         })
       ).toBeInTheDocument()
@@ -74,12 +92,10 @@ describe("Home Page", () => {
 
       expect(
         screen.getByText(
-          /from juicy burgers to tex-mex delights, nachos, nuggets, and irresistible desserts/i
+          /Cravewaves gives restaurants a complete direct-ordering experience—from menus and checkout to orders, menu management, and business analytics/i
         )
       ).toBeInTheDocument()
     })
-
-   
   })
 
   describe("conditional rendering", () => {
@@ -90,17 +106,21 @@ describe("Home Page", () => {
 
       expect(
         screen.getByText(
-          /demo mode: oauth disabled\. Use read-only demo accounts to explore\./i
+          /Demo Mode: OAuth disabled\. Use read-only demo accounts to explore\./i
         )
       ).toBeInTheDocument()
 
       expect(
-        screen.getByRole("button", { name: /sign in as admin/i })
-      ).toBeInTheDocument()
+        screen.getAllByRole("button", {
+          name: /sign in as admin/i,
+        })
+      ).toHaveLength(2)
 
       expect(
-        screen.getByRole("button", { name: /sign in as customer/i })
-      ).toBeInTheDocument()
+        screen.getAllByRole("button", {
+          name: /sign in as customer/i,
+        })
+      ).toHaveLength(2)
     })
 
     it("does not render demo controls for authenticated users", async () => {
