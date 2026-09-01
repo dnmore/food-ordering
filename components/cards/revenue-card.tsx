@@ -19,7 +19,7 @@ export async function RevenueCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Revenue Over Time</CardTitle>
+        <CardTitle className="uppercase">Revenue Over Time</CardTitle>
         <CardDescription>
           Showing total revenue for the last 6 months
         </CardDescription>
