@@ -28,7 +28,7 @@ export default async function Page() {
 
           {DEMO_MODE && !isAuthenticated && (
             <>
-              <div className="w-full bg-muted-foreground/20 p-2 text-center capitalize">
+              <div className="w-full bg-muted-foreground/20 p-2 text-center">
                 <p>
                   Demo Mode: OAuth disabled. Use read-only demo accounts to
                   explore.
