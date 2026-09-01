@@ -18,7 +18,7 @@ export async function TopSellingCard(){
     return(
          <Card>
       <CardHeader>
-        <CardTitle>Top Selling Items  </CardTitle>
+        <CardTitle className="uppercase">Top Selling Items  </CardTitle>
         <CardDescription>January - June 2026</CardDescription>
       </CardHeader>
       <CardContent>

@@ -4,8 +4,7 @@ import { Geist } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { TooltipProvider } from "@/components/ui/tooltip"
-
-
+import {Footer} from "@/components/layout/footer"
 import Navbar from "@/components/layout/navbar"
 
 const geist = Geist({subsets:['latin']})
@@ -29,15 +28,18 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={geist.className}
+      
     >
-      <body>
+      <body  className={`${geist.className} antialiased min-h-screen`}>
         <ThemeProvider>
           <TooltipProvider>
-            <main className="flex min-h-screen flex-col">
+            <div className="min-h-screen flex flex-col">
+            <main className="flex-1">
               <Navbar />
               {children}
             </main>
+            <Footer />
+            </div>
           </TooltipProvider>
         </ThemeProvider>
       </body>
