@@ -7,13 +7,13 @@ import { Folders, ShoppingBag, CreditCard, SearchIcon } from "lucide-react"
 const features = [
   {
     icon: Folders,
-    title: "Menu Management",
+    title: "Menu management",
     description:
       "Create, edit, organize, and remove categories and menu items in seconds.",
   },
   {
     icon: ShoppingBag,
-    title: "Order Management",
+    title: "Order management",
     description:
       "View order details and update statuses from one centralized dashboard.",
   },
@@ -25,7 +25,7 @@ const features = [
   },
   {
     icon: SearchIcon,
-    title: "Search & Filtering",
+    title: "Search & filtering",
     description:
       "Powerful table utilities for growing menus and order histories",
   },
